@@ -21,5 +21,5 @@ make install
 ## Usage
 
 ```
-./scripts/psrling path_to_php_file
+./scripts/psrlint path_to_php_file
 ```
