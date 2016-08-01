@@ -26,7 +26,10 @@
   "autoload": {
     "psr-4": {
       "PsrLinter\\": "src"
-    }
+    },
+    "files": [
+      "src/functions.php"
+    ]
   },
   "require": {
     "nategood/commando": ">= 0.2.8",
