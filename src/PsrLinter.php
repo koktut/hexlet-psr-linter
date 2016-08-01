@@ -46,14 +46,14 @@ class PsrLinter extends NodeVisitorAbstract
     {
         if ($node instanceof Stmt\Function_) {
             if (!$this->rules->validateFunctionName($node->name)) {
-                $logItem = new LogItem($node, "Function name is not in camel caps format");
+                $logItem = new LogItem($node, "Function name is not in camel caps format", LogItem::LOGLEVEL_ERROR);
                 $this->log []= $logItem;
             };
         }
         
         if ($node instanceof Stmt\ClassMethod) {
             if (!$this->rules->validateFunctionName($node->name)) {
-                $logItem = new LogItem($node, "Function name is not in camel caps format");
+                $logItem = new LogItem($node, "Method name is not in camel caps format", LogItem::LOGLEVEL_ERROR);
                 $this->log []= $logItem;
             };
         }

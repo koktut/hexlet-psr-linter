@@ -2,8 +2,6 @@
 
 namespace PsrLinter;
 
-use PhpParser\Error;
-
 /**
  * Class LinterApp
  */
@@ -35,8 +33,9 @@ class LinterApp
         $linter = new PsrLinter();
 
         foreach ($targetFiles as $target) {
+            echo "Validate file: $target";
             $code = file_get_contents($target);
-            $linter->lint($code);
+            $log = $linter->lint($code);
         }
 
         return 0;

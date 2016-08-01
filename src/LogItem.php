@@ -4,20 +4,31 @@ namespace PsrLinter;
 
 use PhpParser\Node;
 
+/**
+ * Class LogItem
+ * @package PsrLinter
+ */
 class LogItem
 {
+    const LOGLEVEL_ERROR = 1;
+    const LOGLEVEL_WARNING = 2;
+
     private $node;
-    private $mesasge;
+    private $message;
+    private $level;
 
     /**
      * LogItem constructor.
      * @param $node
-     * @param $mesasge
+     * @param $message
+     * @param $level
+     * @internal param $mesasge
      */
-    public function __construct($node, $mesasge)
+    public function __construct($node, $message, $level)
     {
         $this->node = $node;
-        $this->mesasge = $mesasge;
+        $this->message = $message;
+        $this->level = $level;
     }
 
     /**
@@ -39,16 +50,33 @@ class LogItem
     /**
      * @return mixed
      */
-    public function getMesasge()
+    public function getMessage()
     {
-        return $this->mesasge;
+        return $this->message;
     }
 
     /**
-     * @param mixed $mesasge
+     * @param $message
+     * @internal param mixed $mesasge
      */
-    public function setMesasge($mesasge)
+    public function setMessage($message)
     {
-        $this->mesasge = $mesasge;
+        $this->message = $message;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLevel()
+    {
+        return $this->level;
+    }
+
+    /**
+     * @param mixed $level
+     */
+    public function setLevel($level)
+    {
+        $this->level = $level;
     }
 }
