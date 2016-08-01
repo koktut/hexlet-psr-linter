@@ -1,0 +1,38 @@
+{
+  "name": "koktut/hexlet-psr-linter",
+  "bin": [
+    "bin/hexlet-psr-linter"
+  ],
+  "type": "library",
+  "description": "PHP PSR linter library",
+  "keywords": [
+    "PHP",
+    "PSR",
+    "linter"
+  ],
+  "homepage": "https://github.com/koktut/hexlet-psr-linter",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Maxim Sobin",
+      "email": "maxim.sobin@gmail.com"
+    }
+  ],
+  "require-dev": {
+    "phpunit/phpunit": "*",
+    "squizlabs/php_codesniffer": "2.*",
+    "codeclimate/php-test-reporter": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "PsrLinter\\": "src"
+    }
+  },
+  "require": {
+    "nategood/commando": ">= 0.2.8",
+    "symfony/yaml": ">= 3.1.3",
+    "mikey179/vfsStream": "~1",
+    "nikic/php-parser": "dev-master",
+    "squizlabs/php_codesniffer": "2.*"
+  }
+}
