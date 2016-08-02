@@ -31,8 +31,6 @@ class LogItem
         $this->level = $level;
         $this->message = $message;
         $this->name = $name;
-        
-        return $this;
     }
 
     /**
