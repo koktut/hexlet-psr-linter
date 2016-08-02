@@ -2,20 +2,23 @@
 
 namespace HexletPsrLinter;
 
-use Linter\PsrLinter;
+use PsrLinter;
+
+use League\CLImate\CLImate;
 
 /**
  * Class LinterApp
  */
 class LinterApp
 {
-    private $outFormat;
+    private $cli;
 
     /**
      * LinterApp constructor.
      */
     public function __construct()
     {
+        $this->cli = new CLImate();
     }
 
     /**
@@ -28,9 +31,9 @@ class LinterApp
 
         $targetFiles = getTargetFiles($srcPath);
 
-        if (is_null($params['format'])) {
+        /*if (is_null($params['format'])) {
             $this->outFormat = 'text';
-        }
+        }*/
 
         $linter = new Linter\PsrLinter();
 
