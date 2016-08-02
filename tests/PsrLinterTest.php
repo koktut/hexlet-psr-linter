@@ -19,6 +19,13 @@ class PsrLinterTest extends \PHPUnit_Framework_TestCase
 
     public function testLintEmpty()
     {
-        $this->assertTrue(empty($this->linter->lint("")));
+        $logger = $this->linter->lint("");
+        $this->assertTrue($logger->getSize() == 0);
+    }
+    
+    public function name()
+    {
+        $node = new \PhpParser\Node\Stmt\Function_("test");
+        
     }
 }

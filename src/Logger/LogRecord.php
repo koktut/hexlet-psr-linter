@@ -1,6 +1,6 @@
 <?php
 
-namespace HexletPsrLinter\Linter;
+namespace HexletPsrLinter\Logger;
 
 use PhpParser\Node;
 
@@ -8,12 +8,10 @@ use PhpParser\Node;
  * Class LogItem
  * @package PsrLinter
  */
-class LogItem
+class LogRecord
 {
-    const LOGLEVEL_ERROR = 1;
-    const LOGLEVEL_WARNING = 2;
-
     private $line;
+    private $column;
     private $level;
     private $message;
     private $name;
@@ -21,13 +19,15 @@ class LogItem
     /**
      * LogItem constructor.
      * @param $line
+     * @param $column
      * @param $level
      * @param $message
      * @param $name
      */
-    public function __construct($line, $level, $message, $name)
+    public function __construct($line, $column, $level, $message, $name)
     {
         $this->line = $line;
+        $this->column = $column;
         $this->level = $level;
         $this->message = $message;
         $this->name = $name;
@@ -47,6 +47,22 @@ class LogItem
     public function setLine($line)
     {
         $this->line = $line;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getColumn()
+    {
+        return $this->column;
+    }
+
+    /**
+     * @param mixed $column
+     */
+    public function setColumn($column)
+    {
+        $this->column = $column;
     }
 
     /**

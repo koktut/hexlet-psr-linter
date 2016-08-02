@@ -2,6 +2,8 @@
 
 namespace HexletPsrLinter;
 
+use \HexletPsrLinter\Linter\LogRecord;
+
 /**
  * @param $srcPath
  * @return array

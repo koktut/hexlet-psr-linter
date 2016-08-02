@@ -14,7 +14,10 @@ class Rules
      */
     public function validateFunctionName($name)
     {
-        return \PHP_CodeSniffer::isCamelCaps($name);
+        if ($name == '__construct') {
+            return true;
+        }
+        return \PHP_CodeSniffer::isCamelCaps($name, false, true, true);
     }
 
     /**
@@ -23,6 +26,6 @@ class Rules
      */
     public function validateVariableName($name)
     {
-        //return \PHP_CodeSniffer::isCamelCaps($name);
+        return \PHP_CodeSniffer::isCamelCaps($name);
     }
 }
