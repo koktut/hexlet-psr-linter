@@ -22,7 +22,6 @@ class LogItem
      * @param $node
      * @param $message
      * @param $level
-     * @internal param $mesasge
      */
     public function __construct($node, $message, $level)
     {
