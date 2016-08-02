@@ -14,20 +14,25 @@ class LogItem
     const LOGLEVEL_WARNING = 2;
 
     private $line;
-    private $message;
     private $level;
+    private $message;
+    private $name;
 
     /**
      * LogItem constructor.
-     * @param $node
-     * @param $message
+     * @param $line
      * @param $level
+     * @param $message
+     * @param $name
      */
-    public function __construct($node, $message, $level)
+    public function __construct($line, $level, $message, $name)
     {
-        $this->line = $node;
-        $this->message = $message;
+        $this->line = $line;
         $this->level = $level;
+        $this->message = $message;
+        $this->name = $name;
+        
+        return $this;
     }
 
     /**
@@ -49,23 +54,6 @@ class LogItem
     /**
      * @return mixed
      */
-    public function getMessage()
-    {
-        return $this->message;
-    }
-
-    /**
-     * @param $message
-     * @internal param mixed $mesasge
-     */
-    public function setMessage($message)
-    {
-        $this->message = $message;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getLevel()
     {
         return $this->level;
@@ -77,5 +65,37 @@ class LogItem
     public function setLevel($level)
     {
         $this->level = $level;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMessage()
+    {
+        return $this->message;
+    }
+
+    /**
+     * @param mixed $message
+     */
+    public function setMessage($message)
+    {
+        $this->message = $message;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
     }
 }
