@@ -54,7 +54,7 @@ class PsrLinter extends NodeVisitorAbstract
     {
         if ($node instanceof Stmt\Function_) {
             if (!$this->rules->validateFunctionName($node->name)) {
-                $this->logger->addRecord($this->makeErrorRecord($node, "Method name is not in camel caps format"));
+                $this->logger->addRecord($this->makeErrorRecord($node, "Function name is not in camel caps format"));
             };
         }
         
