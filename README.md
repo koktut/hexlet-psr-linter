@@ -18,6 +18,11 @@ cd hexlet-psr-linter
 make install
 ```
 
+## Test
+```
+make test
+```
+
 ## Usage
 
 ```
