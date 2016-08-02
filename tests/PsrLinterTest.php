@@ -2,7 +2,7 @@
 
 namespace HexletPsrLinter;
 
-use HexletPsrLinter\Linter\PsrLinter;
+use HexletPsrLinter\Linter\PsrLinterVisitor;
 use HexletPsrLinter\Linter\Rules;
 
 /**
@@ -13,7 +13,7 @@ class PsrLinterTest extends \PHPUnit_Framework_TestCase
 {
     public function testLintEmpty()
     {
-        $logger = (new PsrLinter(new Rules()))->lint("");
+        $logger = (new PsrLinterVisitor(new Rules()))->lint("");
         $this->assertTrue($logger->getSize() == 0);
     }
 
@@ -26,7 +26,7 @@ class PsrLinterTest extends \PHPUnit_Framework_TestCase
             ->method('validateFunctionName')
             ->with('name');
 
-        $linter = new PsrLinter($rules);
+        $linter = new PsrLinterVisitor($rules);
         $linter->lint("<?php function name() {}");
     }
 
@@ -39,7 +39,7 @@ class PsrLinterTest extends \PHPUnit_Framework_TestCase
             ->method('validateFunctionName')
             ->with('name');
 
-        $linter = new PsrLinter($rules);
+        $linter = new PsrLinterVisitor($rules);
         $linter->lint("<?php class Test { public function name() {}}");
     }
 
@@ -52,7 +52,7 @@ class PsrLinterTest extends \PHPUnit_Framework_TestCase
             ->method('validateVariableName')
             ->with('var');
 
-        $linter = new PsrLinter($rules);
+        $linter = new PsrLinterVisitor($rules);
         $linter->lint('<?php $var = 1;');
     }
 }

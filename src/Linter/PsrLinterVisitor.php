@@ -14,7 +14,7 @@ use HexletPsrLinter\Logger\LogRecord;
  * Class PsrLinter
  * @package PhpPsrLinter
  */
-class PsrLinter extends NodeVisitorAbstract
+class PsrLinterVisitor extends NodeVisitorAbstract
 {
     private $parser;
     private $rules;

@@ -36,7 +36,7 @@ class LinterApp
             $this->outFormat = 'text';
         }*/
 
-        $linter = new Linter\PsrLinter(new Rules());
+        $linter = new Linter\PsrLinterVisitor(new Rules());
 
         $exitVal = 0;
         foreach ($targetFiles as $target) {

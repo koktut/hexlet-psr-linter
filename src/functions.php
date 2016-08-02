@@ -28,20 +28,3 @@ function getTargetFiles($srcPath)
 
     return $targetFiles;
 }
-
-/**
- * Заготовка для обработки правил
- * @param $className
- * @return array
- */
-function getRulesMethods($className)
-{
-    $reflector = new \ReflectionClass($className);
-    $rulesMethods = [];
-    foreach ($reflector->getMethods() as $method) {
-        if ($method->isPublic() && strpos($method->getName(), 'get') === 0) {
-            $rulesMethods [] = $method->getName();
-        }
-    }
-    return $rulesMethods;
-}
