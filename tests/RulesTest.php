@@ -44,5 +44,4 @@ class RulesTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->rules->validateVariableName('1functionName'));
         $this->assertFalse($this->rules->validateVariableName('FunctionName'));
     }
-
 }

@@ -40,7 +40,6 @@ class LoggerTest extends \PHPUnit_Framework_TestCase
         $this->logger->addRecord($record);
         $this->logger->clear();
         $this->assertEquals(0, $this->logger->getSize());
-
     }
 
     public function testGetStatistics()

@@ -26,6 +26,5 @@ class PsrLinterTest extends \PHPUnit_Framework_TestCase
     public function name()
     {
         $node = new \PhpParser\Node\Stmt\Function_("test");
-        
     }
 }
