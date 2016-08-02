@@ -9,17 +9,17 @@ class LogItemTest extends \PHPUnit_Framework_TestCase
 {
     public function testConstructor()
     {
-        $logItem = new LogItem("node", "message", LogItem::LOGLEVEL_ERROR);
-        $this->assertEquals("node", $logItem->getNode());
+        $logItem = new LogItem(1, "message", LogItem::LOGLEVEL_ERROR);
+        $this->assertEquals(1, $logItem->getLine());
         $this->assertEquals("message", $logItem->getMessage());
         $this->assertEquals(LogItem::LOGLEVEL_ERROR, $logItem->getLevel());
     }
 
-    public function testSetNode()
+    public function testSetLine()
     {
-        $logItem = new LogItem("", "", 1);
-        $logItem->setNode("node");
-        $this->assertEquals("node", $logItem->getNode());
+        $logItem = new LogItem(0, "", 1);
+        $logItem->setLine(1);
+        $this->assertEquals(1, $logItem->getLine());
     }
 
     public function testSetMessage()

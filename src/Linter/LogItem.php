@@ -13,7 +13,7 @@ class LogItem
     const LOGLEVEL_ERROR = 1;
     const LOGLEVEL_WARNING = 2;
 
-    private $node;
+    private $line;
     private $message;
     private $level;
 
@@ -26,7 +26,7 @@ class LogItem
      */
     public function __construct($node, $message, $level)
     {
-        $this->node = $node;
+        $this->line = $node;
         $this->message = $message;
         $this->level = $level;
     }
@@ -34,17 +34,17 @@ class LogItem
     /**
      * @return mixed
      */
-    public function getNode()
+    public function getLine()
     {
-        return $this->node;
+        return $this->line;
     }
 
     /**
-     * @param mixed $node
+     * @param mixed $line
      */
-    public function setNode($node)
+    public function setLine($line)
     {
-        $this->node = $node;
+        $this->line = $line;
     }
 
     /**
