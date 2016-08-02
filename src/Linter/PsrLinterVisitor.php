@@ -41,7 +41,7 @@ class PsrLinterVisitor extends NodeVisitorAbstract
         $traverser = new NodeTraverser;
         $traverser->addVisitor($this);
         $traverser->traverse($stmts);
-        
+
         return $this->logger;
     }
 
@@ -53,36 +53,19 @@ class PsrLinterVisitor extends NodeVisitorAbstract
      */
     public function leaveNode(Node $node)
     {
-        if ($node instanceof Stmt\Function_) {
-            if (!$this->rules->validateFunctionName($node->name)) {
-                $this->logger->addRecord($this->makeErrorRecord($node, "Function name is not in camel caps format"));
-            };
-        }
-        
-        if ($node instanceof Stmt\ClassMethod) {
-            if (!$this->rules->validateFunctionName($node->name)) {
-                $this->logger->addRecord($this->makeErrorRecord($node, "Method name is not in camel caps format"));
-            };
-        }
+        $result = $this->rules->validate($node);
 
-        if ($node instanceof Node\Expr\Variable) {
-            $this->rules->validateVariableName($node->name);
+        if ($result !== true) {
+            list($level, $message) = $result;
+            $this->logger->addRecord(
+                new LogRecord(
+                    $node->getAttribute('startLine'),
+                    0,
+                    $level,
+                    $message,
+                    $node->name
+                )
+            );
         }
-    }
-
-    /**
-     * @param $node
-     * @param $message
-     * @return LogRecord
-     */
-    private function makeErrorRecord($node, $message)
-    {
-        return $logRecord = new LogRecord(
-            $node->getAttribute("startLine"),
-            0,
-            Logger::LOGLEVEL_ERROR,
-            $message,
-            $node->name
-        );
     }
 }

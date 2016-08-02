@@ -34,25 +34,6 @@ class Logger
     }
     
     /**
-     * @param $line
-     * @param $column
-     * @param $level
-     * @param $message
-     * @param $name
-     */
-    /*public function addRecord($line, $column, $level, $message, $name)
-    {
-        $logRecord= new LogRecord(
-            $line,
-            $column,
-            $level,
-            $message,
-            $name
-        );
-        $this->log []= $logRecord;
-    }*/
-
-    /**
      * @param $index
      * @return bool
      * @throws \OutOfRangeException If index is not in range

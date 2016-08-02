@@ -1,15 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Гуля
- * Date: 02.08.2016
- * Time: 22:10
- */
 
 namespace HexletPsrLinter\Linter;
 
-
-class Rules
+/**
+ * Interface Rules
+ * @package HexletPsrLinter\Linter
+ */
+interface Rules
 {
-
+    /**
+     * @param $node
+     * @return mixed
+     */
+    public function validate($node);
 }
