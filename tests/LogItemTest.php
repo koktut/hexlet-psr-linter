@@ -3,6 +3,7 @@
 namespace PsrLinter;
 
 use PhpParser\Node;
+use Linter\LogItem;
 
 class LogItemTest extends \PHPUnit_Framework_TestCase
 {

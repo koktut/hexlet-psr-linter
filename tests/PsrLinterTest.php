@@ -2,6 +2,8 @@
 
 namespace PsrLinter;
 
+use Linter\PsrLinter;
+
 /**
  * Class PsrLinterTest
  * @package PsrLinter
