@@ -19,14 +19,15 @@ class PsrLinter extends NodeVisitorAbstract
     private $parser;
     private $rules;
     private $logger;
-    
+
     /**
      * PsrLinter constructor.
+     * @param $rules
      */
-    public function __construct()
+    public function __construct($rules)
     {
         $this->parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
-        $this->rules = new Rules();
+        $this->rules = $rules;
     }
 
     /**
