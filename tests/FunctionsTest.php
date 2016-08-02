@@ -1,6 +1,6 @@
 <?php
 
-namespace PsrLinter;
+namespace HexletPsrLinter;
 
 use org\bovigo\vfs\vfsStream;
 

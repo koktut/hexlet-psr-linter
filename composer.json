@@ -25,7 +25,7 @@
   },
   "autoload": {
     "psr-4": {
-      "PsrLinter\\": "src"
+      "HexletPsrLinter\\": "src"
     },
     "files": [
       "src/functions.php"

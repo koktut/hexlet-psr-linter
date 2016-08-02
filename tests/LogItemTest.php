@@ -1,9 +1,9 @@
 <?php
 
-namespace PsrLinter;
+namespace HexletPsrLinter;
 
 use PhpParser\Node;
-use Linter\LogItem;
+use HexletPsrLinter\Linter\LogItem;
 
 class LogItemTest extends \PHPUnit_Framework_TestCase
 {

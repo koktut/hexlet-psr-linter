@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-namespace PsrLinter;
+namespace HexletPsrLinter;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 

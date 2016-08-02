@@ -1,8 +1,8 @@
 <?php
 
-namespace PsrLinter;
+namespace HexletPsrLinter;
 
-use Linter\Rules;
+use HexletPsrLinter\Linter\Rules;
 
 /**
  * Class RulesTest

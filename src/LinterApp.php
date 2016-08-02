@@ -1,8 +1,8 @@
 <?php
 
-namespace PsrLinter;
+namespace HexletPsrLinter;
 
-//use Linter\PsrLinter;
+use Linter\PsrLinter;
 
 /**
  * Class LinterApp
@@ -32,7 +32,7 @@ class LinterApp
             $this->outFormat = 'text';
         }
 
-        $linter = new PsrLinter();
+        $linter = new Linter\PsrLinter();
 
         foreach ($targetFiles as $target) {
             echo "Validate file: $target";

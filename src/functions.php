@@ -1,6 +1,6 @@
 <?php
 
-namespace PsrLinter;
+namespace HexletPsrLinter;
 
 /**
  * @param $srcPath
