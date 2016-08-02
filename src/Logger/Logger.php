@@ -2,6 +2,10 @@
 
 namespace HexletPsrLinter\Logger;
 
+/**
+ * Class Logger
+ * @package HexletPsrLinter\Logger
+ */
 class Logger
 {
     const LOGLEVEL_ERROR = 1;
@@ -32,10 +36,10 @@ class Logger
     {
         $this->log []= $logRecord;
     }
-    
+
     /**
      * @param $index
-     * @return bool
+     * @return mixed
      * @throws \OutOfRangeException If index is not in range
      */
     public function getRecord($index)
