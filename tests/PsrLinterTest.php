@@ -2,6 +2,7 @@
 
 namespace HexletPsrLinter;
 
+use HexletPsrLinter\Linter\DefaultRules;
 use HexletPsrLinter\Linter\PsrLinterVisitor;
 use HexletPsrLinter\Linter\Rules;
 
@@ -13,46 +14,20 @@ class PsrLinterTest extends \PHPUnit_Framework_TestCase
 {
     public function testLintEmpty()
     {
-        $logger = (new PsrLinterVisitor(new Rules()))->lint("");
+        $logger = (new PsrLinterVisitor(new DefaultRules()))->lint("");
         $this->assertTrue($logger->getSize() == 0);
     }
 
-    public function testVildateFunctionName()
+    public function testVildate()
     {
-        $rules = $this->getMockBuilder(Rules::class)
-            ->setMethods(['validateFunctionName'])
+        $rules = $this->getMockBuilder(DefaultRules::class)
+            ->setMethods(['validate'])
             ->getMock();
         $rules->expects($this->once())
-            ->method('validateFunctionName')
-            ->with('name');
+            ->method('validate')
+            ->with();
 
         $linter = new PsrLinterVisitor($rules);
         $linter->lint("<?php function name() {}");
-    }
-
-    public function testVildateMethodName()
-    {
-        $rules = $this->getMockBuilder(Rules::class)
-            ->setMethods(['validateFunctionName'])
-            ->getMock();
-        $rules->expects($this->once())
-            ->method('validateFunctionName')
-            ->with('name');
-
-        $linter = new PsrLinterVisitor($rules);
-        $linter->lint("<?php class Test { public function name() {}}");
-    }
-
-    public function testValidateVariableName()
-    {
-        $rules = $this->getMockBuilder(Rules::class)
-            ->setMethods(['validateVariableName'])
-            ->getMock();
-        $rules->expects($this->once())
-            ->method('validateVariableName')
-            ->with('var');
-
-        $linter = new PsrLinterVisitor($rules);
-        $linter->lint('<?php $var = 1;');
     }
 }
