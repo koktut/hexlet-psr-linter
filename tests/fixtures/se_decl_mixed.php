@@ -7,3 +7,5 @@ function foo()
 {
     // function body
 }
+
+foo();
