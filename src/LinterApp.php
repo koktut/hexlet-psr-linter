@@ -2,9 +2,9 @@
 
 namespace HexletPsrLinter;
 
+use HexletPsrLinter\Linter\DefaultRules;
 use PsrLinter;
 use HexletPsrLinter\Logger\Logger;
-use HexletPsrLinter\Linter\Rules;
 use League\CLImate\CLImate;
 
 /**
@@ -36,8 +36,10 @@ class LinterApp
         /*if (is_null($params['format'])) {
             $this->outFormat = 'text';
         }*/
+        
+        $rules = [DefaultRules::class];
 
-        $linter = new Linter\PsrLinterVisitor(new Rules());
+        $linter = new Linter\PsrLinterVisitor($rules);
 
         $exitVal = 0;
         foreach ($targetFiles as $target) {

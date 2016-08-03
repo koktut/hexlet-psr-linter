@@ -3,6 +3,7 @@
 namespace HexletPsrLinter\Linter;
 
 use PhpParser\Node;
+use PhpParser\NodeDumper;
 use PhpParser\NodeVisitorAbstract;
 use PhpParser\ParserFactory;
 use PhpParser\Node\Stmt;
@@ -16,9 +17,15 @@ use HexletPsrLinter\Logger\LogRecord;
  */
 class PsrLinterVisitor extends NodeVisitorAbstract
 {
+    const VISITOR_MODE_LINTER = 1;
+    const VISITOR_MODE_SIDE_EFFECTS = 2;
+
     private $parser;
     private $rules;
     private $logger;
+    private $visitorMode;
+    private $sideEffects;
+    private $declarations;
 
     /**
      * PsrLinter constructor.
@@ -37,11 +44,30 @@ class PsrLinterVisitor extends NodeVisitorAbstract
     public function lint($code)
     {
         $this->logger = new Logger();
+
+        $this->visitorMode = self::VISITOR_MODE_LINTER;
         $stmts = $this->parser->parse($code);
         $traverser = new NodeTraverser;
         $traverser->addVisitor($this);
         $traverser->traverse($stmts);
-        
+
+        $this->sideEffects = false;
+        $this->declarations = false;
+        $this->visitorMode = self::VISITOR_MODE_SIDE_EFFECTS;
+        $traverser->traverse($stmts);
+        if ($this->sideEffects && $this->declarations) {
+            $this->logger->addRecord(
+                new LogRecord(
+                    '',
+                    '',
+                    Logger::LOGLEVEL_ERROR,
+                    'A file SHOULD declare new symbols (classes, functions, constants, etc.) and cause no other side' .
+                    'effects, or it SHOULD execute logic with side effects, but SHOULD NOT do both.',
+                    ''
+                )
+            );
+        }
+
         return $this->logger;
     }
 
@@ -51,38 +77,77 @@ class PsrLinterVisitor extends NodeVisitorAbstract
      * @param Node $node
      * @return void
      */
-    public function leaveNode(Node $node)
+    public function enterNode(Node $node)
     {
-        if ($node instanceof Stmt\Function_) {
-            if (!$this->rules->validateFunctionName($node->name)) {
-                $this->logger->addRecord($this->makeErrorRecord($node, "Function name is not in camel caps format"));
-            };
-        }
-        
-        if ($node instanceof Stmt\ClassMethod) {
-            if (!$this->rules->validateFunctionName($node->name)) {
-                $this->logger->addRecord($this->makeErrorRecord($node, "Method name is not in camel caps format"));
-            };
-        }
+        switch ($this->visitorMode) {
+            case self::VISITOR_MODE_LINTER:
+                foreach ($this->rules as $rule) {
+                    $vaildator = new $rule;
 
-        if ($node instanceof Node\Expr\Variable) {
-            $this->rules->validateVariableName($node->name);
+                    $result = $vaildator->validate($node);
+
+                    if ($result !== true) {
+                        list($level, $message) = $result;
+                        $this->logger->addRecord(
+                            new LogRecord(
+                                $node->getAttribute('startLine'),
+                                0,
+                                $level,
+                                $message,
+                                $node->name
+                            )
+                        );
+                    }
+                }
+                break;
+            case self::VISITOR_MODE_SIDE_EFFECTS:
+                if ($this->visitorMode == self::VISITOR_MODE_SIDE_EFFECTS && !($node instanceof Stmt\Namespace_)) {
+                    $this->sideEffects |= $this->isSideEffect($node);
+                    $this->declarations |= $this->isDeclaration($node);
+                    return NodeTraverser::DONT_TRAVERSE_CHILDREN;
+                }
+                break;
         }
     }
 
     /**
      * @param $node
-     * @param $message
-     * @return LogRecord
+     * @return bool
      */
-    private function makeErrorRecord($node, $message)
+    private function isDeclaration($node)
     {
-        return $logRecord = new LogRecord(
-            $node->getAttribute("startLine"),
-            0,
-            Logger::LOGLEVEL_ERROR,
-            $message,
-            $node->name
-        );
+        $declarationNodeTypes = [
+            Node\Stmt::class,
+        ];
+
+        if ($node instanceof Node\Stmt\Echo_) {
+            return false;
+        }
+        foreach ($declarationNodeTypes as $type) {
+            if ($node instanceof $type) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param $node
+     * @return mixed
+     */
+    private function isSideEffect($node)
+    {
+        $sideEffectNodeTypes = [
+            Node\Expr::class,
+            Node\Stmt\Echo_::class
+        ];
+
+        foreach ($sideEffectNodeTypes as $type) {
+            if ($node instanceof $type) {
+                return true;
+            }
+        }
+        return false;
     }
 }
