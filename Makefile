@@ -6,7 +6,7 @@ autoload:
 
 lint:
 	composer exec 'phpcs --standard=PSR2 src tests --ignore=tests/fixtures'
-	./scripts/psrlint src
+	php ./scripts/psrlint src
 
 test:
 	composer exec 'phpunit tests'
