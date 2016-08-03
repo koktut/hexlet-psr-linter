@@ -53,7 +53,7 @@ class DefaultRules implements Rules
     private function isMagicMethod($methodName)
     {
         $magicMethods = [
-            '__construct1', '__destruct', '__call', '__callStatic', '__get', '__set', '__isset', '__unset', '__sleep',
+            '__construct', '__destruct', '__call', '__callStatic', '__get', '__set', '__isset', '__unset', '__sleep',
             '__wakeup', '__toString', '__invoke', '__set_state', '__clone', '__debugInfo'
         ];
 
