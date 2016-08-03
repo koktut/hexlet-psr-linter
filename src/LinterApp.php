@@ -2,6 +2,7 @@
 
 namespace HexletPsrLinter;
 
+use HexletPsrLinter\Linter\DefaultRules;
 use PsrLinter;
 use HexletPsrLinter\Logger\Logger;
 use League\CLImate\CLImate;
@@ -36,7 +37,7 @@ class LinterApp
             $this->outFormat = 'text';
         }*/
         
-        $rules = [\HexletPsrLinter\Linter\DefaultRulesBaseInterfase::class];
+        $rules = [DefaultRules::class];
 
         $linter = new Linter\PsrLinterVisitor($rules);
 
