@@ -97,22 +97,24 @@ class PsrLinterVisitor extends NodeVisitorAbstract
                     $result = $vaildator->validate($node);
 
                     if ($result !== true) {
+                        list($level, $message) = $result;
+                        $name = $node->name;
                         // trying to fix
                         $fixedNode = $vaildator->fix($node);
-                        $result = $vaildator->validate($fixedNode);
-                        if ($result === true) {
+                        $resultOfFix = $vaildator->validate($fixedNode);
+                        if ($resultOfFix === true) {
+                            $level = Logger::LOGLEVEL_FIXED;
+                            $name = $name . ' -> ' . $fixedNode->name;
                             $node = $fixedNode;
-                            continue;
                         }
 
-                        list($level, $message) = $result;
                         $this->logger->addRecord(
                             new LogRecord(
                                 $node->getAttribute('startLine'),
                                 0,
                                 $level,
                                 $message,
-                                $node->name
+                                $name
                             )
                         );
                     }

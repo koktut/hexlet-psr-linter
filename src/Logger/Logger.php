@@ -8,13 +8,10 @@ namespace HexletPsrLinter\Logger;
  */
 class Logger
 {
-    const LOGLEVEL_ERROR = 2;
     const LOGLEVEL_WARNING = 1;
+    const LOGLEVEL_ERROR = 2;
+    const LOGLEVEL_FIXED = 3;
 
-    private $levelText = [
-        self::LOGLEVEL_ERROR => 'error',
-        self::LOGLEVEL_WARNING => 'warning'
-    ];
     private $log;
 
     /**
@@ -38,7 +35,7 @@ class Logger
      */
     public function addRecord($logRecord)
     {
-        $this->log []= $logRecord;
+        $this->log [] = $logRecord;
     }
 
     /**
@@ -68,24 +65,34 @@ class Logger
      */
     public function getStatistics()
     {
-        $problems = $this->getSize();
         $err = count(
             array_filter($this->log, function ($item) {
                 return ($item->getLevel() == Logger::LOGLEVEL_ERROR);
             })
         );
-        return [$problems, $err];
+        $warn = count(
+            array_filter($this->log, function ($item) {
+                return ($item->getLevel() == Logger::LOGLEVEL_WARNING);
+            })
+        );
+
+        return [$err, $warn];
     }
 
     /**
      * @param $level
      * @return mixed
      */
-    public function getLevelAsText($level)
+    public static function getLevelAsText($level)
     {
-        if (!key_exists($level, $this->levelText)) {
+        $levelText = [
+            self::LOGLEVEL_ERROR => 'error',
+            self::LOGLEVEL_WARNING => 'warning',
+            self::LOGLEVEL_FIXED => 'fixed'
+        ];
+        if (!key_exists($level, $levelText)) {
             return '';
         }
-        return $this->levelText[$level];
+        return $levelText[$level];
     }
 }

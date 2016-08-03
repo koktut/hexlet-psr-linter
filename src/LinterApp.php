@@ -30,6 +30,7 @@ class LinterApp
     public function run($params)
     {
         $srcPath = $params[0];
+        $autoFix = $params['fix'];
 
         $targetFiles = getTargetFiles($srcPath);
 
@@ -51,7 +52,11 @@ class LinterApp
 
             $code = file_get_contents($target);
 
-            $logger = $linter->lint($code);
+            $logger = $linter->lint($code, $autoFix);
+            if ($autoFix) {
+                $prettyCode = $linter->getPrettyCode();
+                file_put_contents($target, $prettyCode);
+            }
 
             if ($logger->getSize() != 0) {
                 $this->cli->green("$target");
@@ -83,8 +88,8 @@ class LinterApp
      */
     private function printLogStat($logger)
     {
-        list($problems, $err) = $logger->getStatistics();
-        $warn = $problems - $err;
+        list($err, $warn) = $logger->getStatistics();
+        $problems = $err + $warn;
         $this->cli->lightRed("$problems problems ($err errors, $warn warnings)");
     }
 
@@ -94,15 +99,18 @@ class LinterApp
     private function printLogItem($logRecord)
     {
         $this->cli->lightGray()->inline(sprintf('%-7s', $logRecord->getLine() . ':' . $logRecord->getColumn()));
+        $format = '%-10s';
+        $text = Logger::getLevelAsText($logRecord->getLevel());
         switch ($logRecord->getLevel()) {
             case Logger::LOGLEVEL_ERROR:
-                $this->cli->lightRed()->inline(sprintf('%-10s', 'error'));
+                $this->cli->lightRed()->inline(sprintf($format, $text));
                 break;
             case Logger::LOGLEVEL_WARNING:
-                $this->cli->lightYellow()->inline(sprintf('%-10s', 'waring'));
+                $this->cli->lightRed()->inline(sprintf($format, $text));
                 break;
-            default:
-                $this->cli->yellow('error');
+            case Logger::LOGLEVEL_FIXED:
+                $this->cli->lightRed()->inline(sprintf($format, $text));
+                break;
         }
         $this->cli
             ->white()->inline(sprintf("%-60s", $logRecord->getMessage()))
