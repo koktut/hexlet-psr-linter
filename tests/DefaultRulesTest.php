@@ -26,32 +26,28 @@ class DefaultRulesTest extends \PHPUnit_Framework_TestCase
 
     public function testValidateFunctionNamesWithValidNames()
     {
-        $this->assertTrue($this->rules->validate(new Stmt\Function_("functionName")));
-        $this->assertTrue($this->rules->validate(new Stmt\Function_("functionname")));
-        $this->assertTrue($this->rules->validate(new Stmt\Function_("func")));
+        $this->assertTrue($this->rules->validate(new Stmt\Function_('functionName')));
+        $this->assertTrue($this->rules->validate(new Stmt\Function_('functionname')));
+        $this->assertTrue($this->rules->validate(new Stmt\Function_('func')));
     }
 
     public function testValidateFunctionNamesWithInvalidNames()
     {
-        $this->assertNotTrue($this->rules->validate(new Stmt\Function_("FunctionName")));
-        $this->assertNotTrue($this->rules->validate(new Stmt\Function_("function-name")));
-        $this->assertNotTrue($this->rules->validate(new Stmt\Function_("1functionName")));
-        $this->assertNotTrue($this->rules->validate(new Stmt\Function_("!functionName")));
+        $this->assertNotTrue($this->rules->validate(new Stmt\Function_('FunctionName')));
+        $this->assertNotTrue($this->rules->validate(new Stmt\Function_('function-name')));
     }
 
     public function testValidateMathodNamesWithValidNames()
     {
-        $this->assertTrue($this->rules->validate(new Stmt\ClassMethod("methodName")));
-        $this->assertTrue($this->rules->validate(new Stmt\ClassMethod("methodname")));
-        $this->assertTrue($this->rules->validate(new Stmt\ClassMethod("method")));
+        $this->assertTrue($this->rules->validate(new Stmt\ClassMethod('methodName')));
+        $this->assertTrue($this->rules->validate(new Stmt\ClassMethod('methodname')));
+        $this->assertTrue($this->rules->validate(new Stmt\ClassMethod('method')));
     }
 
     public function testValidateMethodNamesWithInvalidNames()
     {
-        $this->assertNotTrue($this->rules->validate(new Stmt\ClassMethod("MethodName")));
-        $this->assertNotTrue($this->rules->validate(new Stmt\ClassMethod("method-name")));
-        $this->assertNotTrue($this->rules->validate(new Stmt\ClassMethod("1methodName")));
-        $this->assertNotTrue($this->rules->validate(new Stmt\ClassMethod("!methodName")));
+        $this->assertNotTrue($this->rules->validate(new Stmt\ClassMethod('MethodName')));
+        $this->assertNotTrue($this->rules->validate(new Stmt\ClassMethod('method-name')));
     }
 
     public function testValidateVariableNamesWithValidNames()
@@ -64,9 +60,7 @@ class DefaultRulesTest extends \PHPUnit_Framework_TestCase
 
     public function testValidateVariableNamesWithInvalidNames()
     {
-        $this->assertNotTrue($this->rules->validate(new Node\Expr\Variable("var_name")));
-        $this->assertNotTrue($this->rules->validate(new Node\Expr\Variable("var-name")));
-        $this->assertNotTrue($this->rules->validate(new Node\Expr\Variable("1var")));
-        $this->assertNotTrue($this->rules->validate(new Node\Expr\Variable("!var")));
+        $this->assertNotTrue($this->rules->validate(new Node\Expr\Variable('var_name')));
+        $this->assertNotTrue($this->rules->validate(new Node\Expr\Variable('var-name')));
     }
 }
