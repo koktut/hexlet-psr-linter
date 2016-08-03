@@ -59,5 +59,4 @@ class DefaultRules implements Rules
 
         return in_array($methodName, $magicMethods);
     }
-
 }
