@@ -9,6 +9,7 @@ use League\CLImate\CLImate;
 
 /**
  * Class LinterApp
+ * @codeCoverageIgnore
  */
 class LinterApp
 {
