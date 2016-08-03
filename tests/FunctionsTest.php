@@ -4,7 +4,6 @@ namespace HexletPsrLinter;
 
 use org\bovigo\vfs\vfsStream;
 
-
 /**
  * Class FuntionsTest
  */
