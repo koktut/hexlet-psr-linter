@@ -10,7 +10,7 @@ use HexletPsrLinter\Logger\Logger;
  * Class TestRules
  * @package HexletPsrLinter\Linter
  */
-class DefaultRules implements Rules
+class DefaultRules implements RulesBaseInterfase
 {
     /**
      * @param $node

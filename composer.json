@@ -28,7 +28,7 @@
       "HexletPsrLinter\\": "src"
     },
     "files": [
-      "src/functions.php"
+      "src/utils.php"
     ]
   },
   "require": {

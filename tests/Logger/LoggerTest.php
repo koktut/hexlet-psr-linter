@@ -63,4 +63,11 @@ class LoggerTest extends \PHPUnit_Framework_TestCase
     {
         $this->logger->getRecord(10);
     }
+
+    public function testGetLevelAsText()
+    {
+        $this->assertEquals('error', $this->logger->getLevelAsText(Logger::LOGLEVEL_ERROR));
+        $this->assertEquals('warning', $this->logger->getLevelAsText(Logger::LOGLEVEL_WARNING));
+        $this->assertEquals('', $this->logger->getLevelAsText(-1));
+    }
 }

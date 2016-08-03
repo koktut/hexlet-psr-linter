@@ -53,19 +53,23 @@ class PsrLinterVisitor extends NodeVisitorAbstract
      */
     public function leaveNode(Node $node)
     {
-        $result = $this->rules->validate($node);
+        foreach ($this->rules as $rule) {
+            $vaildator = new $rule;
 
-        if ($result !== true) {
-            list($level, $message) = $result;
-            $this->logger->addRecord(
-                new LogRecord(
-                    $node->getAttribute('startLine'),
-                    0,
-                    $level,
-                    $message,
-                    $node->name
-                )
-            );
+            $result = $vaildator->validate($node);
+
+            if ($result !== true) {
+                list($level, $message) = $result;
+                $this->logger->addRecord(
+                    new LogRecord(
+                        $node->getAttribute('startLine'),
+                        0,
+                        $level,
+                        $message,
+                        $node->name
+                    )
+                );
+            }
         }
     }
 }

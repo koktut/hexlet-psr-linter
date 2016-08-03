@@ -42,6 +42,7 @@ class DefaultRulesTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->rules->validate(new Stmt\ClassMethod('methodName')));
         $this->assertTrue($this->rules->validate(new Stmt\ClassMethod('methodname')));
         $this->assertTrue($this->rules->validate(new Stmt\ClassMethod('method')));
+        $this->assertTrue($this->rules->validate(new Stmt\ClassMethod('__construct')));
     }
 
     public function testValidateMethodNamesWithInvalidNames()

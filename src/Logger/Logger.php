@@ -8,9 +8,13 @@ namespace HexletPsrLinter\Logger;
  */
 class Logger
 {
-    const LOGLEVEL_ERROR = 1;
-    const LOGLEVEL_WARNING = 2;
+    const LOGLEVEL_ERROR = 2;
+    const LOGLEVEL_WARNING = 1;
 
+    private $levelText = [
+        self::LOGLEVEL_ERROR => 'error',
+        self::LOGLEVEL_WARNING => 'warning'
+    ];
     private $log;
 
     /**
@@ -52,13 +56,16 @@ class Logger
     }
 
     /**
-     *
+     * Clear log
      */
     public function clear()
     {
         $this->log = [];
     }
 
+    /**
+     * @return array
+     */
     public function getStatistics()
     {
         $problems = $this->getSize();
@@ -68,5 +75,17 @@ class Logger
             })
         );
         return [$problems, $err];
+    }
+
+    /**
+     * @param $level
+     * @return mixed
+     */
+    public function getLevelAsText($level)
+    {
+        if (!key_exists($level, $this->levelText)) {
+            return '';
+        }
+        return $this->levelText[$level];
     }
 }

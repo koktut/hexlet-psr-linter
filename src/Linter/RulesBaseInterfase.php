@@ -3,10 +3,10 @@
 namespace HexletPsrLinter\Linter;
 
 /**
- * Interface Rules
+ * Interface RulesBaseInterfase
  * @package HexletPsrLinter\Linter
  */
-interface Rules
+interface RulesBaseInterfase
 {
     /**
      * @param $node
