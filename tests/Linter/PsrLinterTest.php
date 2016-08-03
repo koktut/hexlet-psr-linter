@@ -44,4 +44,12 @@ class PsrLinterTest extends \PHPUnit_Framework_TestCase
         $logger = (new PsrLinterVisitor([DefaultRules::class]))->lint($code);
         $this->assertTrue($logger->getSize() != 0);
     }
+
+    public function testAutoFix()
+    {
+        $code = '<?php $my__var_name_ = 1;';
+        $linter = new PsrLinterVisitor([DefaultRules::class]);
+        $linter->lint($code, true);
+        $this->assertEquals('$MyVarName = 1;', $linter->getPrettyCode());
+    }
 }

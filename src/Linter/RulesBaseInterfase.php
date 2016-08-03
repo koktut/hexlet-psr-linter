@@ -13,4 +13,10 @@ interface RulesBaseInterfase
      * @return mixed
      */
     public function validate($node);
+
+    /**
+     * @param $node
+     * @return mixed
+     */
+    public function fix($node);
 }

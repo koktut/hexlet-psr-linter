@@ -64,4 +64,12 @@ class DefaultRulesTest extends \PHPUnit_Framework_TestCase
         $this->assertNotTrue($this->rules->validate(new Node\Expr\Variable('var_name')));
         $this->assertNotTrue($this->rules->validate(new Node\Expr\Variable('var-name')));
     }
+    
+    public function testFixVariableName()
+    {
+        $this->assertEquals('MyVarName', $this->rules->fixVariableName('_my_var_name'));
+        $this->assertEquals('MyVarName', $this->rules->fixVariableName('_my_var_name_'));
+        $this->assertEquals('MyVarName', $this->rules->fixVariableName('my_var_name_'));
+        $this->assertEquals('MyVarName', $this->rules->fixVariableName('my___var_name_'));
+    }
 }

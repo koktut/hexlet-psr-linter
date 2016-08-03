@@ -38,7 +38,8 @@ class DefaultRules implements RulesBaseInterfase
 
         if ($node instanceof Node\Expr\Variable) {
             if (!\PHP_CodeSniffer::isCamelCaps($node->name, false, true, true)
-                && !\PHP_CodeSniffer::isCamelCaps($node->name, true, true, true)) {
+                && !\PHP_CodeSniffer::isCamelCaps($node->name, true, true, true)
+            ) {
                 return [Logger::LOGLEVEL_WARNING, "Variable name is not in camel caps format"];
             }
             return true;
@@ -58,5 +59,40 @@ class DefaultRules implements RulesBaseInterfase
         ];
 
         return in_array($methodName, $magicMethods);
+    }
+
+    /**
+     * @param $node
+     * @return mixed
+     */
+    public function fix($node)
+    {
+        if ($node instanceof Node\Expr\Variable) {
+            $node->name = $this->fixVariableName($node->name);
+        }
+        return $node;
+    }
+
+    /**
+     * @param $name
+     * @return mixed
+     */
+    public function fixVariableName($name)
+    {
+        if ($name[strlen($name) - 1] == '_') {
+            return $this->fixVariableName(substr($name, 0, strlen($name) - 1));
+        }
+
+        if (($pos = strpos($name, '_')) !== false) {
+            if ($pos < strlen($name)) {
+                $name[$pos + 1] = strtoupper($name[$pos + 1]);
+                $name = substr($name, 0, $pos) . substr($name, $pos + 1);
+                return $this->fixVariableName($name);
+            }
+        }
+
+        $name[0] = strtoupper($name[0]);
+
+        return $name;
     }
 }

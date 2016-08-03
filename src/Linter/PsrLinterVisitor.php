@@ -3,13 +3,13 @@
 namespace HexletPsrLinter\Linter;
 
 use PhpParser\Node;
-use PhpParser\NodeDumper;
 use PhpParser\NodeVisitorAbstract;
 use PhpParser\ParserFactory;
 use PhpParser\Node\Stmt;
 use PhpParser\NodeTraverser;
 use HexletPsrLinter\Logger\Logger;
 use HexletPsrLinter\Logger\LogRecord;
+use PhpParser\PrettyPrinter;
 
 /**
  * Class PsrLinter
@@ -26,6 +26,8 @@ class PsrLinterVisitor extends NodeVisitorAbstract
     private $visitorMode;
     private $sideEffects;
     private $declarations;
+    private $autoFix;
+    private $prettyCode;
 
     /**
      * PsrLinter constructor.
@@ -39,10 +41,14 @@ class PsrLinterVisitor extends NodeVisitorAbstract
 
     /**
      * @param $code
+     * @param bool $autoFix - In case of true - pretty code will be generated (avaiable by getPrettyCode method)
      * @return Logger
      */
-    public function lint($code)
+    public function lint($code, $autoFix = false)
     {
+        $this->autoFix = $autoFix;
+        $this->prettyCode = '';
+
         $this->logger = new Logger();
 
         $this->visitorMode = self::VISITOR_MODE_LINTER;
@@ -50,6 +56,11 @@ class PsrLinterVisitor extends NodeVisitorAbstract
         $traverser = new NodeTraverser;
         $traverser->addVisitor($this);
         $traverser->traverse($stmts);
+
+        if ($autoFix) {
+            $prettyPrinter = new PrettyPrinter\Standard();
+            $this->prettyCode = $prettyPrinter->prettyPrint($stmts);
+        }
 
         $this->sideEffects = false;
         $this->declarations = false;
@@ -67,7 +78,6 @@ class PsrLinterVisitor extends NodeVisitorAbstract
                 )
             );
         }
-
         return $this->logger;
     }
 
@@ -87,6 +97,14 @@ class PsrLinterVisitor extends NodeVisitorAbstract
                     $result = $vaildator->validate($node);
 
                     if ($result !== true) {
+                        // trying to fix
+                        $fixedNode = $vaildator->fix($node);
+                        $result = $vaildator->validate($fixedNode);
+                        if ($result === true) {
+                            $node = $fixedNode;
+                            continue;
+                        }
+
                         list($level, $message) = $result;
                         $this->logger->addRecord(
                             new LogRecord(
@@ -149,5 +167,13 @@ class PsrLinterVisitor extends NodeVisitorAbstract
             }
         }
         return false;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPrettyCode()
+    {
+        return $this->prettyCode;
     }
 }
