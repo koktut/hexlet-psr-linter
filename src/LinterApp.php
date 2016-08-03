@@ -31,13 +31,10 @@ class LinterApp
     {
         $srcPath = $params[0];
         $autoFix = $params['fix'];
-
+        $reportFormat = $params['format'];
+            
         $targetFiles = getTargetFiles($srcPath);
 
-        /*if (is_null($params['format'])) {
-            $this->outFormat = 'text';
-        }*/
-        
         $rules = [DefaultRules::class];
 
         $linter = new Linter\PsrLinterVisitor($rules);
@@ -53,6 +50,7 @@ class LinterApp
             $code = file_get_contents($target);
 
             $logger = $linter->lint($code, $autoFix);
+            
             if ($autoFix) {
                 $prettyCode = $linter->getPrettyCode();
                 file_put_contents($target, $prettyCode);

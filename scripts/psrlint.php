@@ -16,9 +16,10 @@ $cmd->option()
 $cmd->option('format')
     ->description('Report file format')
     ->must(function ($format) {
-        $formats = array('text', 'json', 'yml');
+        $formats = array('txt', 'json', 'yml');
         return in_array($format, $formats);
-    });
+    })
+    ->default('txt');
 
 $cmd->option('fix')
     ->description('Auto fix names (my_var_name -> MyVarName)')
