@@ -2,7 +2,7 @@
 
 namespace HexletPsrLinter;
 
-use \HexletPsrLinter\Linter\LogRecord;
+use PhpParser\Node\Stmt\Function_;
 
 /**
  * @param $srcPath

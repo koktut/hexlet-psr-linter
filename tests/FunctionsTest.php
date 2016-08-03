@@ -2,8 +2,8 @@
 
 namespace HexletPsrLinter;
 
-use HexletPsrLinter\Linter\LogRecord;
 use org\bovigo\vfs\vfsStream;
+
 
 /**
  * Class FuntionsTest
