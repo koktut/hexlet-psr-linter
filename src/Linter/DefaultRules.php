@@ -26,9 +26,10 @@ class DefaultRules implements Rules
         }
 
         if ($node instanceof Stmt\ClassMethod) {
-            /*if ($node->name == '__construct') {
+            if ($this->isMagicMethod($node->name)) {
                 return true;
-            }*/
+            }
+
             if (!\PHP_CodeSniffer::isCamelCaps($node->name, false, true, true)) {
                 return [Logger::LOGLEVEL_ERROR, "Method name is not in camel caps format"];
             }
@@ -45,4 +46,18 @@ class DefaultRules implements Rules
 
         return true;
     }
+
+    /**
+     * @param $methodName
+     */
+    private function isMagicMethod($methodName)
+    {
+        $magicMethods = [
+            '__construct', '__destruct', '__call', '__callStatic', '__get', '__set', '__isset', '__unset', '__sleep',
+            '__wakeup', '__toString', '__invoke', '__set_state', '__clone', '__debugInfo'
+        ];
+
+        return in_array($methodName, $magicMethods);
+    }
+
 }
