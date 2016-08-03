@@ -53,7 +53,7 @@ class LoggerTest extends \PHPUnit_Framework_TestCase
         $this->logger->addRecord($warnRecord);
         $this->logger->addRecord($warnRecord);
 
-        $this->assertEquals([5, 3], $this->logger->getStatistics());
+        $this->assertEquals([3, 2], $this->logger->getStatistics());
     }
 
     /**
