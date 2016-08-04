@@ -23,9 +23,9 @@ class PsrLinterVisitor extends NodeVisitorAbstract
     private $parser;
     private $rules;
     private $logger;
-    private $visitorMode;
+    /*private $visitorMode;
     private $sideEffects;
-    private $declarations;
+    private $declarations;*/
     private $autoFix;
     private $prettyCode;
 
@@ -51,18 +51,47 @@ class PsrLinterVisitor extends NodeVisitorAbstract
 
         $this->logger = new Logger();
 
-        $this->visitorMode = self::VISITOR_MODE_LINTER;
+        //$this->visitorMode = self::VISITOR_MODE_LINTER;
         $stmts = $this->parser->parse($code);
         $traverser = new NodeTraverser;
-        $traverser->addVisitor($this);
+        //$traverser->addVisitor($this);
+        $rulesVisitor = new RulesVsistor($this->rules, $this->autoFix);
+        $traverser->addVisitor($rulesVisitor);
         $traverser->traverse($stmts);
+        $messages = $rulesVisitor->getMessages();
+        foreach ($messages as $message) {
+            $this->logger->addRecord(
+                new LogRecord(
+                    $message['line'],
+                    $message['column'],
+                    $message['level'],
+                    $message['message'],
+                    $message['name']
+                )
+            );
+        }
 
         if ($autoFix) {
             $prettyPrinter = new PrettyPrinter\Standard();
             $this->prettyCode = $prettyPrinter->prettyPrint($stmts);
         }
 
-        $this->sideEffects = false;
+        $sideEffectVisitor = new SideEffectsDeclarationsVisitor();
+        $traverser->addVisitor($sideEffectVisitor);
+        $traverser->traverse($stmts);
+        if ($sideEffectVisitor->isMixed()) {
+            $this->logger->addRecord(
+                new LogRecord(
+                    '',
+                    '',
+                    Logger::LOGLEVEL_ERROR,
+                    'A file SHOULD declare new symbols (classes, functions, constants, etc.) and cause no other side' .
+                    'effects, or it SHOULD execute logic with side effects, but SHOULD NOT do both.',
+                    ''
+                )
+            );
+        }
+        /*$this->sideEffects = false;
         $this->declarations = false;
         $this->visitorMode = self::VISITOR_MODE_SIDE_EFFECTS;
         $traverser->traverse($stmts);
@@ -77,7 +106,7 @@ class PsrLinterVisitor extends NodeVisitorAbstract
                     ''
                 )
             );
-        }
+        }*/
         return $this->logger;
     }
 
@@ -87,7 +116,7 @@ class PsrLinterVisitor extends NodeVisitorAbstract
      * @param Node $node
      * @return void
      */
-    public function enterNode(Node $node)
+    /*public function enterNode(Node $node)
     {
         switch ($this->visitorMode) {
             case self::VISITOR_MODE_LINTER:
@@ -129,21 +158,27 @@ class PsrLinterVisitor extends NodeVisitorAbstract
                 }
                 break;
         }
-    }
+    }*/
 
     /**
      * @param $node
      * @return bool
      */
-    private function isDeclaration($node)
+    /*private function isDeclaration($node)
     {
+        $excludeTypes = [
+            Node\Stmt\Echo_::class,
+        ];
         $declarationNodeTypes = [
             Node\Stmt::class,
         ];
 
-        if ($node instanceof Node\Stmt\Echo_) {
-            return false;
+        foreach ($excludeTypes as $type) {
+            if ($node instanceof $type) {
+                return false;
+            }
         }
+
         foreach ($declarationNodeTypes as $type) {
             if ($node instanceof $type) {
                 return true;
@@ -151,13 +186,13 @@ class PsrLinterVisitor extends NodeVisitorAbstract
         }
 
         return false;
-    }
+    }*/
 
     /**
      * @param $node
      * @return mixed
      */
-    private function isSideEffect($node)
+    /*private function isSideEffect($node)
     {
         $sideEffectNodeTypes = [
             Node\Expr::class,
@@ -170,7 +205,7 @@ class PsrLinterVisitor extends NodeVisitorAbstract
             }
         }
         return false;
-    }
+    }*/
 
     /**
      * @return mixed

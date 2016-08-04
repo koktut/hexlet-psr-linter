@@ -57,7 +57,7 @@ class LinterApp
             }
 
             if ($logger->getSize() != 0) {
-                $this->cli->green("$target");
+                $this->cli->lightGreen("$target");
                 $this->cli->br();
                 $this->printLog($logger);
                 $this->cli->br();
@@ -104,10 +104,10 @@ class LinterApp
                 $this->cli->lightRed()->inline(sprintf($format, $text));
                 break;
             case Logger::LOGLEVEL_WARNING:
-                $this->cli->lightRed()->inline(sprintf($format, $text));
+                $this->cli->lightYellow()->inline(sprintf($format, $text));
                 break;
             case Logger::LOGLEVEL_FIXED:
-                $this->cli->lightRed()->inline(sprintf($format, $text));
+                $this->cli->lightGreen()->inline(sprintf($format, $text));
                 break;
         }
         $this->cli
