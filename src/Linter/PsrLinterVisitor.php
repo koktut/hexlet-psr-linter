@@ -71,7 +71,7 @@ class PsrLinterVisitor extends NodeVisitorAbstract
             $this->prettyCode = $prettyPrinter->prettyPrint($stmts);
         }
 
-        $sideEffectVisitor = new SideEffectsDeclarationsVisitor();
+        $sideEffectVisitor = new SideEffectsVisitor();
         $traverser->addVisitor($sideEffectVisitor);
         $traverser->traverse($stmts);
         if ($sideEffectVisitor->isMixed()) {
