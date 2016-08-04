@@ -45,6 +45,15 @@ class DefaultRules implements RulesBaseInterfase
             return true;
         }
 
+        if ($node instanceof Node\Stmt\PropertyProperty) {
+            if (!\PHP_CodeSniffer::isCamelCaps($node->name, false, true, true)
+                && !\PHP_CodeSniffer::isCamelCaps($node->name, true, true, true)
+            ) {
+                return [Logger::LOGLEVEL_WARNING, "Property name is not in camel caps format"];
+            }
+            return true;
+        }
+
         return true;
     }
 
@@ -67,7 +76,7 @@ class DefaultRules implements RulesBaseInterfase
      */
     public function fix($node)
     {
-        if ($node instanceof Node\Expr\Variable) {
+        if (($node instanceof Node\Expr\Variable) || ($node instanceof Node\Stmt\PropertyProperty)) {
             $node->name = $this->fixVariableName($node->name);
         }
         return $node;
