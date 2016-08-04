@@ -16,8 +16,9 @@ $cmd->option()
 
 $cmd->option('o')
     ->aka('output')
-    ->description('Report file path [default: report]');
-
+    ->description('Report file path [default: report]')
+    ->default('report');
+    
 $cmd->option('format')
     ->description('Report file format [default: txt]')
     ->must(function ($format) {

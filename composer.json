@@ -1,7 +1,7 @@
 {
   "name": "koktut/hexlet-psr-linter",
   "bin": [
-    "bin/hexlet-psr-linter"
+    "bin/psrlint"
   ],
   "type": "library",
   "description": "PHP PSR linter library",
