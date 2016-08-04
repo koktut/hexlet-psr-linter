@@ -15,7 +15,7 @@ class RulesVsistor extends NodeVisitorAbstract
 {
     private $rules;
     private $autoFix;
-    private $messages;
+    private $report;
 
     /**
      * RulesVsistor constructor.
@@ -26,7 +26,7 @@ class RulesVsistor extends NodeVisitorAbstract
     {
         $this->rules = $rules;
         $this->autoFix = $autoFix;
-        $this->messages = [];
+        $this->report = [];
     }
 
     /**
@@ -53,7 +53,7 @@ class RulesVsistor extends NodeVisitorAbstract
                         $node = $fixedNode;
                     }
                 }
-                $this->messages[] = [
+                $this->report[] = [
                     'line' => $node->getAttribute('startLine'),
                     'column' => 0,
                     'level' => $level,
@@ -67,8 +67,8 @@ class RulesVsistor extends NodeVisitorAbstract
     /**
      * @return array
      */
-    public function getMessages()
+    public function getReport()
     {
-        return $this->messages;
+        return $this->report;
     }
 }

@@ -3,7 +3,6 @@
 namespace HexletPsrLinter\Linter;
 
 use PhpParser\Node;
-use PhpParser\NodeVisitorAbstract;
 use PhpParser\ParserFactory;
 use PhpParser\Node\Stmt;
 use PhpParser\NodeTraverser;
@@ -15,7 +14,7 @@ use PhpParser\PrettyPrinter;
  * Class PsrLinter
  * @package PhpPsrLinter
  */
-class PsrLinterVisitor extends NodeVisitorAbstract
+class PsrLinterVisitor
 {
     private $parser;
     private $rules;
@@ -50,7 +49,7 @@ class PsrLinterVisitor extends NodeVisitorAbstract
         $rulesVisitor = new RulesVsistor($this->rules, $this->autoFix);
         $traverser->addVisitor($rulesVisitor);
         $traverser->traverse($stmts);
-        $messages = $rulesVisitor->getMessages();
+        $messages = $rulesVisitor->getReport();
         foreach ($messages as $message) {
             $this->logger->addRecord(
                 new LogRecord(
