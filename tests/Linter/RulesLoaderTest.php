@@ -25,7 +25,7 @@ class RulesLoaderTest extends \PHPUnit_Framework_TestCase
 
     public function testLoadRules()
     {
-        //$this->rulesLoader->loadRules(__DIR__ . '/../fixtures/rules');
-        //$this->assertEquals([DefaultRules::class], $this->rulesLoader->getRules());
+        $this->rulesLoader->loadRules('TestRules', __DIR__ . '/../fixtures/rules');
+        $this->assertEquals(['TestRules\AnotherTestRules','TestRules\TestRules'], $this->rulesLoader->getRules());
     }
 }

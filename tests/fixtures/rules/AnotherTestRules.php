@@ -1,6 +1,8 @@
 <?php
 
-namespace HexletPsrLinter\Linter;
+namespace TestRules;
+
+use HexletPsrLinter\Linter\RulesBaseInterfase;
 
 /**
  * Class AntotherTetsRules
@@ -16,6 +18,7 @@ class AnotherTestRules implements RulesBaseInterfase
     public function validate($node)
     {
         // TODO: Implement validate() method.
+        return "AnotherTestRules";
     }
 
     /**

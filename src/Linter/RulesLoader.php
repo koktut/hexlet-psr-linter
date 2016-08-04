@@ -21,19 +21,19 @@ class RulesLoader
     /**
      * @param $path
      */
-    public function loadRules($path)
+    public function loadRules($namespace, $path)
     {
-        // use autoloader here
-
-        //$targets = \HexletPsrLinter\getTargetFiles($path);
-        //foreach ($targets as $target) {
-            /*include($target);
-            $className = basename($target, ".php");
+        $targets = \HexletPsrLinter\getTargetFiles($path);
+        foreach ($targets as $target) {
+            $className = $namespace . '\\'. basename($target, ".php");
+            include($target);
             if (class_exists($className)) {
                 $implements = class_implements($className);
+                if (in_array(RulesBaseInterfase::class, $implements)) {
+                    $this->rules []= $className;
+                }
             }
-                //call_user_func(array($classname, 'getInstance'));
-        }*/
+        }
     }
 
     /**
