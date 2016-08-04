@@ -31,7 +31,9 @@ class LinterApp
     {
         $srcPath = $params[0];
         $autoFix = $params['fix'];
+        $makeReport = $params['report'];
         $reportFormat = $params['format'];
+        $reportFileName = $params['output'];
 
         $targetFiles = getTargetFiles($srcPath);
 
@@ -39,7 +41,10 @@ class LinterApp
 
         $linter = new Linter\PsrLinterVisitor($rules);
 
+        $reportBuilder = new ReportBuilder\ReportBulder($reportFormat);
+
         $exitVal = 0;
+
         foreach ($targetFiles as $target) {
             if (!file_exists($target)) {
                 $this->printErrorMsg("File not found: $target");
@@ -66,11 +71,20 @@ class LinterApp
 
                 $exitVal = 1;
             }
+
+            if ($makeReport === true && $logger->getSize() != 0) {
+                $reportBuilder->addSection($target, $logger);
+            }
+        }
+
+        if ($makeReport === true) {
+            file_put_contents($reportFileName, $reportBuilder->build());
         }
 
         return $exitVal;
     }
 
+    
     /**
      * @param $logger - Instance of Logger
      */

@@ -11,13 +11,21 @@ use HexletPsrLinter\ReportBuilder\ReportBulder;
  */
 class ReportBuilderTest extends \PHPUnit_Framework_TestCase
 {
-    public function testBuild()
+    public function testBuildTxt()
     {
-        $logger = new Logger();
-        $report = new ReportBulder();
+        $report = new ReportBulder('txt');
+        $this->assertEquals('', $report->build());
+    }
 
-        $this->assertEquals('', $report->buld('txt', $logger));
-        $this->assertEquals('[]', $report->buld('json', $logger));
-        $this->assertEquals('{  }', $report->buld('yml', $logger));
+    public function testBuildJson()
+    {
+        $report = new ReportBulder('json');
+        $this->assertEquals('[]', $report->build());
+    }
+
+    public function testBuildYml()
+    {
+        $report = new ReportBulder('yml');
+        $this->assertEquals('{  }', $report->build());
     }
 }

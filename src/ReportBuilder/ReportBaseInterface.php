@@ -8,5 +8,12 @@ namespace HexletPsrLinter\ReportBuilder;
  */
 interface ReportBaseInterface
 {
-    public function build($logger);
+    /**
+     * @param $sectioName
+     * @param $logger
+     * @return mixed
+     */
+    public function addSection($sectioName, $logger);
+
+    public function build();
 }

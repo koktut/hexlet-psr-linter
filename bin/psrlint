@@ -14,18 +14,25 @@ $cmd->option()
     ->require(true)
     ->description('Target path');
 
-$cmd->option('o')
-    ->aka('output')
-    ->description('Report file path [default: report]')
-    ->default('report');
-    
-$cmd->option('format')
+$cmd->option('r')
+    ->aka('report')
+    ->description('Make report file')
+    ->boolean()
+    ->default(false);
+
+$cmd->option('f')
+    ->aka('format')
     ->description('Report file format [default: txt]')
     ->must(function ($format) {
         $formats = array('txt', 'json', 'yml');
         return in_array($format, $formats);
     })
     ->default('txt');
+
+$cmd->option('o')
+    ->aka('output')
+    ->description('Report file path [default: report]')
+    ->default('report');
 
 $cmd->option('fix')
     ->description('Auto fix names (my_var_name -> MyVarName)')

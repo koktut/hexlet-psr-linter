@@ -2,8 +2,6 @@
 
 namespace HexletPsrLinter;
 
-$a_A = 1;
-
 /**
  * @param $srcPath
  * @return array

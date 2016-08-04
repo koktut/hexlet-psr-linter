@@ -8,19 +8,29 @@ namespace HexletPsrLinter\ReportBuilder;
  */
 class ReportTxt implements ReportBaseInterface
 {
+    private $report;
 
     /**
-     * @param $logger
-     * @return string
+     * ReportTxt constructor.
      */
-    public function build($logger)
+    public function __construct()
     {
-        $report = '';
+        $this->report = '';
+    }
+
+    /**
+     * @param $sectioName
+     * @param $logger
+     * @return mixed
+     */
+    public function addSection($sectioName, $logger)
+    {
         $index = 1;
+        $this->report .= 'file: ' . $sectioName . PHP_EOL;
         foreach ($logger->toArray() as $record) {
-            $report .=
+            $this->report .=
                 sprintf(
-                    "%d. %-7s%-10s%-60s%-30s",
+                    "%-4s %-7s%-10s%-60s%-30s",
                     $index++,
                     $record['line'] . ':' . $record['column'],
                     $logger->getLevelAsText($record['level']),
@@ -28,7 +38,13 @@ class ReportTxt implements ReportBaseInterface
                     $record['name']
                 ) . PHP_EOL;
         }
+    }
 
-        return $report;
+    /**
+     * @return string
+     */
+    public function build()
+    {
+        return $this->report;
     }
 }
