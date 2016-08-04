@@ -53,7 +53,7 @@ class LoggerTest extends \PHPUnit_Framework_TestCase
         $this->logger->addRecord($warnRecord);
         $this->logger->addRecord($warnRecord);
 
-        $this->assertEquals([3, 2], $this->logger->getStatistics());
+        $this->assertEquals(['err' => 3, 'warn' => 2], $this->logger->getStatistics());
     }
 
     /**
@@ -69,5 +69,18 @@ class LoggerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('error', $this->logger->getLevelAsText(Logger::LOGLEVEL_ERROR));
         $this->assertEquals('warning', $this->logger->getLevelAsText(Logger::LOGLEVEL_WARNING));
         $this->assertEquals('', $this->logger->getLevelAsText(-1));
+    }
+
+    public function testToArrayEmpty()
+    {
+        $this->assertEquals([], $this->logger->toArray());
+    }
+
+    public function testToArray()
+    {
+        $this->logger->addRecord(new LogRecord(0, 1, 1, '', ''));
+        $this->logger->addRecord(new LogRecord(0, 1, 1, '', ''));
+        $this->logger->addRecord(new LogRecord(0, 1, 1, '', ''));
+        $this->assertEquals(3, count($this->logger->toArray()));
     }
 }

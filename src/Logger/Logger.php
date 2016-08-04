@@ -23,6 +23,23 @@ class Logger
     }
 
     /**
+     * @param $level
+     * @return mixed
+     */
+    public static function getLevelAsText($level)
+    {
+        $levelText = [
+            self::LOGLEVEL_ERROR => 'error',
+            self::LOGLEVEL_WARNING => 'warning',
+            self::LOGLEVEL_FIXED => 'fixed'
+        ];
+        if (!key_exists($level, $levelText)) {
+            return '';
+        }
+        return $levelText[$level];
+    }
+
+    /**
      * @return mixed
      */
     public function getSize()
@@ -76,23 +93,25 @@ class Logger
             })
         );
 
-        return [$err, $warn];
+        return ['err' =>$err, 'warn' => $warn];
     }
 
     /**
-     * @param $level
-     * @return mixed
+     * @return array
      */
-    public static function getLevelAsText($level)
+    public function toArray()
     {
-        $levelText = [
-            self::LOGLEVEL_ERROR => 'error',
-            self::LOGLEVEL_WARNING => 'warning',
-            self::LOGLEVEL_FIXED => 'fixed'
-        ];
-        if (!key_exists($level, $levelText)) {
-            return '';
+        $resArray = [];
+        for ($index = 0; $index < $this->getSize(); $index++) {
+            $record = $this->getRecord($index);
+            $resArray[$index] = [
+                'line' => $record->getLine(),
+                'column' =>  $record->getColumn(),
+                'level' => $record->getLevel(),
+                'message' => $record->getMessage(),
+                'name' => $record->getName(),
+            ];
         }
-        return $levelText[$level];
+        return $resArray;
     }
 }

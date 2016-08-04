@@ -2,7 +2,7 @@
 
 namespace HexletPsrLinter;
 
-use PhpParser\Node\Stmt\Function_;
+$a_A = 1;
 
 /**
  * @param $srcPath

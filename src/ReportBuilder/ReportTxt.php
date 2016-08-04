@@ -16,16 +16,16 @@ class ReportTxt implements ReportBaseInterface
     public function build($logger)
     {
         $report = '';
-        for ($index = 0; $index < $logger->getSize(); $index++) {
-            $record = $logger->getRecord($index);
+        $index = 1;
+        foreach ($logger->toArray() as $record) {
             $report .=
                 sprintf(
                     "%d. %-7s%-10s%-60s%-30s",
-                    $index + 1,
-                    $record->getLine() . ':' . $record->getColumn(),
-                    $logger->getLevelAsText($record->getLevel()),
-                    $record->getMessage(),
-                    $record->getName()
+                    $index++,
+                    $record['line'] . ':' . $record['column'],
+                    $logger->getLevelAsText($record['level']),
+                    $record['message'],
+                    $record['name']
                 ) . PHP_EOL;
         }
 
