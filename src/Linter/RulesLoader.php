@@ -23,7 +23,17 @@ class RulesLoader
      */
     public function loadRules($path)
     {
-        $targets = \HexletPsrLinter\getTargetFiles($path);
+        // use autoloader here
+
+        //$targets = \HexletPsrLinter\getTargetFiles($path);
+        //foreach ($targets as $target) {
+            /*include($target);
+            $className = basename($target, ".php");
+            if (class_exists($className)) {
+                $implements = class_implements($className);
+            }
+                //call_user_func(array($classname, 'getInstance'));
+        }*/
     }
 
     /**
