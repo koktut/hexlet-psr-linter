@@ -23,9 +23,6 @@ class PsrLinterVisitor extends NodeVisitorAbstract
     private $parser;
     private $rules;
     private $logger;
-    /*private $visitorMode;
-    private $sideEffects;
-    private $declarations;*/
     private $autoFix;
     private $prettyCode;
 
@@ -51,10 +48,8 @@ class PsrLinterVisitor extends NodeVisitorAbstract
 
         $this->logger = new Logger();
 
-        //$this->visitorMode = self::VISITOR_MODE_LINTER;
         $stmts = $this->parser->parse($code);
         $traverser = new NodeTraverser;
-        //$traverser->addVisitor($this);
         $rulesVisitor = new RulesVsistor($this->rules, $this->autoFix);
         $traverser->addVisitor($rulesVisitor);
         $traverser->traverse($stmts);
@@ -91,121 +86,8 @@ class PsrLinterVisitor extends NodeVisitorAbstract
                 )
             );
         }
-        /*$this->sideEffects = false;
-        $this->declarations = false;
-        $this->visitorMode = self::VISITOR_MODE_SIDE_EFFECTS;
-        $traverser->traverse($stmts);
-        if ($this->sideEffects && $this->declarations) {
-            $this->logger->addRecord(
-                new LogRecord(
-                    '',
-                    '',
-                    Logger::LOGLEVEL_ERROR,
-                    'A file SHOULD declare new symbols (classes, functions, constants, etc.) and cause no other side' .
-                    'effects, or it SHOULD execute logic with side effects, but SHOULD NOT do both.',
-                    ''
-                )
-            );
-        }*/
         return $this->logger;
     }
-
-    /**
-     * Callback function for visitor
-     *
-     * @param Node $node
-     * @return void
-     */
-    /*public function enterNode(Node $node)
-    {
-        switch ($this->visitorMode) {
-            case self::VISITOR_MODE_LINTER:
-                foreach ($this->rules as $rule) {
-                    $vaildator = new $rule;
-
-                    $result = $vaildator->validate($node);
-
-                    if ($result !== true) {
-                        list($level, $message) = $result;
-                        $name = $node->name;
-
-                        if ($this->autoFix) {
-                            $fixedNode = $vaildator->fix($node);
-                            $resultOfFix = $vaildator->validate($fixedNode);
-                            if ($resultOfFix === true) {
-                                $level = Logger::LOGLEVEL_FIXED;
-                                $name = $name . ' -> ' . $fixedNode->name;
-                                $node = $fixedNode;
-                            }
-                        }
-                        $this->logger->addRecord(
-                            new LogRecord(
-                                $node->getAttribute('startLine'),
-                                0,
-                                $level,
-                                $message,
-                                $name
-                            )
-                        );
-                    }
-                }
-                break;
-            case self::VISITOR_MODE_SIDE_EFFECTS:
-                if ($this->visitorMode == self::VISITOR_MODE_SIDE_EFFECTS && !($node instanceof Stmt\Namespace_)) {
-                    $this->sideEffects |= $this->isSideEffect($node);
-                    $this->declarations |= $this->isDeclaration($node);
-                    return NodeTraverser::DONT_TRAVERSE_CHILDREN;
-                }
-                break;
-        }
-    }*/
-
-    /**
-     * @param $node
-     * @return bool
-     */
-    /*private function isDeclaration($node)
-    {
-        $excludeTypes = [
-            Node\Stmt\Echo_::class,
-        ];
-        $declarationNodeTypes = [
-            Node\Stmt::class,
-        ];
-
-        foreach ($excludeTypes as $type) {
-            if ($node instanceof $type) {
-                return false;
-            }
-        }
-
-        foreach ($declarationNodeTypes as $type) {
-            if ($node instanceof $type) {
-                return true;
-            }
-        }
-
-        return false;
-    }*/
-
-    /**
-     * @param $node
-     * @return mixed
-     */
-    /*private function isSideEffect($node)
-    {
-        $sideEffectNodeTypes = [
-            Node\Expr::class,
-            Node\Stmt\Echo_::class
-        ];
-
-        foreach ($sideEffectNodeTypes as $type) {
-            if ($node instanceof $type) {
-                return true;
-            }
-        }
-        return false;
-    }*/
 
     /**
      * @return mixed
