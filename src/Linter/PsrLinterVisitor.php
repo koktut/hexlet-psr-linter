@@ -17,9 +17,6 @@ use PhpParser\PrettyPrinter;
  */
 class PsrLinterVisitor extends NodeVisitorAbstract
 {
-    const VISITOR_MODE_LINTER = 1;
-    const VISITOR_MODE_SIDE_EFFECTS = 2;
-
     private $parser;
     private $rules;
     private $logger;

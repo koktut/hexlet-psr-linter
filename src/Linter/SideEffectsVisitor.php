@@ -12,7 +12,7 @@ use PhpParser\NodeTraverser;
  * Class SideEffectsDeclarationsVisitor
  * @package HexletPsrLinter\Linter
  */
-class SideEffectsDeclarationsVisitor extends NodeVisitorAbstract
+class SideEffectsVisitor extends NodeVisitorAbstract
 {
     private $sideEffects;
     private $declarations;
