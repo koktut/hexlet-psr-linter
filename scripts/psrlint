@@ -12,9 +12,14 @@ $cmd->beepOnError(false);
 
 $cmd->option()
     ->require(true)
-    ->describedAs('Target path');
+    ->description('Target path');
+
+$cmd->option('o')
+    ->aka('output')
+    ->description('Report file path [default: report]');
+
 $cmd->option('format')
-    ->description('Report file format')
+    ->description('Report file format [default: txt]')
     ->must(function ($format) {
         $formats = array('txt', 'json', 'yml');
         return in_array($format, $formats);

@@ -32,7 +32,7 @@ class LinterApp
         $srcPath = $params[0];
         $autoFix = $params['fix'];
         $reportFormat = $params['format'];
-            
+
         $targetFiles = getTargetFiles($srcPath);
 
         $rules = [DefaultRules::class];
@@ -50,10 +50,10 @@ class LinterApp
             $code = file_get_contents($target);
 
             $logger = $linter->lint($code, $autoFix);
-            
+
             if ($autoFix) {
                 $prettyCode = $linter->getPrettyCode();
-                file_put_contents($target, $prettyCode);
+                file_put_contents($target, '<?php' . PHP_EOL . $prettyCode);
             }
 
             if ($logger->getSize() != 0) {
@@ -63,7 +63,7 @@ class LinterApp
                 $this->cli->br();
                 $this->printLogStat($logger);
                 $this->cli->br();
-                
+
                 $exitVal = 1;
             }
         }
