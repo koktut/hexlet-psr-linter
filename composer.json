@@ -1,10 +1,7 @@
 {
   "name": "koktut/hexlet-psr-linter",
-  "bin": [
-    "bin/psrlint"
-  ],
-  "type": "library",
   "description": "PHP PSR linter library",
+  "type": "library",
   "keywords": [
     "PHP",
     "PSR",
@@ -18,6 +15,14 @@
       "email": "maxim.sobin@gmail.com"
     }
   ],
+  "require": {
+    "nategood/commando": ">= 0.2.8",
+    "symfony/yaml": ">= 3.1.3",
+    "mikey179/vfsStream": "~1",
+    "nikic/php-parser": "dev-master",
+    "squizlabs/php_codesniffer": "2.*",
+    "league/climate": "*"
+  },
   "require-dev": {
     "phpunit/phpunit": "*",
     "squizlabs/php_codesniffer": "2.*",
@@ -31,12 +36,7 @@
       "src/utils.php"
     ]
   },
-  "require": {
-    "nategood/commando": ">= 0.2.8",
-    "symfony/yaml": ">= 3.1.3",
-    "mikey179/vfsStream": "~1",
-    "nikic/php-parser": "dev-master",
-    "squizlabs/php_codesniffer": "2.*",
-    "league/climate": "*"
-  }
+  "bin": [
+    "bin/psrlint"
+  ]
 }
