@@ -46,7 +46,7 @@ class PsrLinter
 
         $stmts = $this->parser->parse($code);
         $traverser = new NodeTraverser;
-        $rulesVisitor = new RulesVsistor($this->rules, $this->autoFix);
+        $rulesVisitor = new RulesVisitor($this->rules, $this->autoFix);
         $traverser->addVisitor($rulesVisitor);
         $traverser->traverse($stmts);
         $messages = $rulesVisitor->getLog();

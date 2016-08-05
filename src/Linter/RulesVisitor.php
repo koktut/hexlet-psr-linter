@@ -11,7 +11,7 @@ use PhpParser\PrettyPrinter;
 /**
  * Class RulesVsistor
  */
-class RulesVsistor extends NodeVisitorAbstract
+class RulesVisitor extends NodeVisitorAbstract
 {
     private $rules;
     private $autoFix;
