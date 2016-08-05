@@ -12,7 +12,10 @@ $cmd->beepOnError(false);
 
 $cmd->option()
     ->require(true)
-    ->description('Target path');
+    ->description('Sources path');
+$cmd->option()
+    ->require(true)
+    ->description('Rules path');
 
 $cmd->option('r')
     ->aka('report')
