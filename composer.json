@@ -37,6 +37,6 @@
     ]
   },
   "bin": [
-    "bin/psrlint"
+    "scripts/psrlint"
   ]
 }
