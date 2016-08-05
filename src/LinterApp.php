@@ -2,8 +2,8 @@
 
 namespace HexletPsrLinter;
 
-use HexletPsrLinter\Linter\DefaultRules;
-use PsrLinter;
+use HexletPsrLinter\Linter\Loader\RulesLoader;
+use HexletPsrLinter\Linter\Rules\DefaultRules;
 use HexletPsrLinter\Logger\Logger;
 use League\CLImate\CLImate;
 
@@ -30,21 +30,28 @@ class LinterApp
     public function run($params)
     {
         $srcPath = $params[0];
+        $rulesPath = $params[1];
         $autoFix = $params['fix'];
         $makeReport = $params['report'];
         $reportFormat = $params['format'];
         $reportFileName = $params['output'];
 
-        $targetFiles = getTargetFiles($srcPath);
+        $rulesLoader = new RulesLoader();
+        $rules = $rulesLoader->loadRules($rulesPath);
+        $this->cli->lightGreen("Loading rules:");
+        $this->printLog($rulesLoader->getLog());
+        if ($rules == []) {
+            $this->printErrorMsg('No rules found');
+            return 1;
+        }
 
-        $rules = [DefaultRules::class];
-
-        $linter = new Linter\PsrLinterVisitor($rules);
+        $linter = new Linter\PsrLinter($rules);
 
         $reportBuilder = new ReportBuilder\ReportBulder($reportFormat);
 
         $exitVal = 0;
 
+        $targetFiles = getTargetFiles($srcPath);
         foreach ($targetFiles as $target) {
             if (!file_exists($target)) {
                 $this->printErrorMsg("File not found: $target");
@@ -84,14 +91,20 @@ class LinterApp
         return $exitVal;
     }
 
-    
+
     /**
      * @param $logger - Instance of Logger
      */
     private function printLog($logger)
     {
+        $maxLen = 0;
         for ($i = 0; $i < $logger->getSize(); $i++) {
-            $this->printLogItem($logger->getRecord($i));
+            $message = $logger->getRecord($i)->getMessage();
+            $maxLen = $maxLen < strlen($message) ? strlen($message) : $maxLen;
+        }
+
+        for ($i = 0; $i < $logger->getSize(); $i++) {
+            $this->printLogItem($logger->getRecord($i), $maxLen);
         }
     }
 
@@ -110,8 +123,9 @@ class LinterApp
     /**
      * @param $logRecord - Instance of LogRecord
      */
-    private function printLogItem($logRecord)
+    private function printLogItem($logRecord, $maxMessageLen)
     {
+        $maxMessageLen += 2;
         $this->cli->lightGray()->inline(sprintf('%-7s', $logRecord->getLine() . ':' . $logRecord->getColumn()));
         $format = '%-10s';
         $text = Logger::getLevelAsText($logRecord->getLevel());
@@ -122,13 +136,13 @@ class LinterApp
             case Logger::LOGLEVEL_WARNING:
                 $this->cli->lightYellow()->inline(sprintf($format, $text));
                 break;
-            case Logger::LOGLEVEL_FIXED:
+            default:
                 $this->cli->lightGreen()->inline(sprintf($format, $text));
                 break;
         }
         $this->cli
-            ->white()->inline(sprintf("%-60s", $logRecord->getMessage()))
-            ->lightGray()->inline(sprintf("%-30s", $logRecord->getName()))
+            ->white()->inline(sprintf("%-{$maxMessageLen}s", $logRecord->getMessage()))
+            ->lightGray()->inline(sprintf("%s", $logRecord->getName()))
             ->br();
     }
 

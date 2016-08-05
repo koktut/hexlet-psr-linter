@@ -11,6 +11,7 @@ class Logger
     const LOGLEVEL_WARNING = 1;
     const LOGLEVEL_ERROR = 2;
     const LOGLEVEL_FIXED = 3;
+    const LOGLEVEL_OK = 4;
 
     private $log;
 
@@ -31,7 +32,8 @@ class Logger
         $levelText = [
             self::LOGLEVEL_ERROR => 'error',
             self::LOGLEVEL_WARNING => 'warning',
-            self::LOGLEVEL_FIXED => 'fixed'
+            self::LOGLEVEL_FIXED => 'fixed',
+            self::LOGLEVEL_OK => 'ok'
         ];
         if (!key_exists($level, $levelText)) {
             return '';

@@ -21,7 +21,9 @@ function getTargetFiles($srcPath)
             }
         }
     } else {
-        $targetFiles[] = $srcPath;
+        if (is_file($srcPath)) {
+            $targetFiles[] = $srcPath;
+        }
     }
 
     return $targetFiles;

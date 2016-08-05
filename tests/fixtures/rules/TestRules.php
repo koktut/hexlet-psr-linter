@@ -2,7 +2,7 @@
 
 namespace TestRules;
 
-use HexletPsrLinter\Linter\RulesBaseInterfase;
+use HexletPsrLinter\Linter\Rules\RulesBaseInterfase;
 
 /**
  * Class TestRules
@@ -10,6 +10,14 @@ use HexletPsrLinter\Linter\RulesBaseInterfase;
  */
 class TestRules implements RulesBaseInterfase
 {
+    /**
+     * @return mixed
+     */
+    public static function getDescription()
+    {
+        return "Awsome rules!";
+    }
+
     /**
      * @param $node
      * @return mixed

@@ -2,7 +2,7 @@
 
 namespace HexletPsrLinter;
 
-use HexletPsrLinter\Linter\DefaultRules;
+use HexletPsrLinter\Linter\Rules\DefaultRules;
 use PhpParser\Node\Stmt;
 use PhpParser\Node;
 

@@ -2,12 +2,12 @@
 
 namespace HexletPsrLinter;
 
-use HexletPsrLinter\Linter\DefaultRules;
-use HexletPsrLinter\Linter\RulesLoader;
+use HexletPsrLinter\Linter\Loader\RulesLoader;
+use HexletPsrLinter\Linter\RulesLoadVisitor;
+use HexletPsrLinter\Logger\Logger;
 
 /**
- * Class RulesLoaderTest
- * @package HexletPsrLinter
+ * Class RulesLoadVisitoTest
  */
 class RulesLoaderTest extends \PHPUnit_Framework_TestCase
 {
@@ -17,15 +17,11 @@ class RulesLoaderTest extends \PHPUnit_Framework_TestCase
     {
         $this->rulesLoader = new RulesLoader();
     }
-    
-    public function testGetRulesEmpty()
-    {
-        $this->assertEquals([], $this->rulesLoader->getRules());
-    }
 
     public function testLoadRules()
     {
-        $this->rulesLoader->loadRules('TestRules', __DIR__ . '/../fixtures/rules');
+        $this->rulesLoader->loadRules(__DIR__ . '/../fixtures/rules');
         $this->assertEquals(['TestRules\AnotherTestRules','TestRules\TestRules'], $this->rulesLoader->getRules());
+        $this->assertEquals(3, $this->rulesLoader->getLog()->getSize());
     }
 }

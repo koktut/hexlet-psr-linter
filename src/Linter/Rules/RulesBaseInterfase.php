@@ -1,6 +1,6 @@
 <?php
 
-namespace HexletPsrLinter\Linter;
+namespace HexletPsrLinter\Linter\Rules;
 
 /**
  * Interface RulesBaseInterfase
@@ -8,6 +8,11 @@ namespace HexletPsrLinter\Linter;
  */
 interface RulesBaseInterfase
 {
+    /**
+     * @return mixed
+     */
+    public static function getDescription();
+
     /**
      * @param $node
      * @return mixed

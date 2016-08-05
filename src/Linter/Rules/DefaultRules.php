@@ -1,6 +1,6 @@
 <?php
 
-namespace HexletPsrLinter\Linter;
+namespace HexletPsrLinter\Linter\Rules;
 
 use PhpParser\Node;
 use PhpParser\Node\Stmt;
@@ -12,6 +12,14 @@ use HexletPsrLinter\Logger\Logger;
  */
 class DefaultRules implements RulesBaseInterfase
 {
+    /**
+     * @return string
+     */
+    public static function getDescription()
+    {
+        return "Default rules";
+    }
+
     /**
      * @param $node
      * @return bool|string

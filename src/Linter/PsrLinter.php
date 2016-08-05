@@ -14,7 +14,7 @@ use PhpParser\PrettyPrinter;
  * Class PsrLinter
  * @package PhpPsrLinter
  */
-class PsrLinterVisitor
+class PsrLinter
 {
     private $parser;
     private $rules;
@@ -49,7 +49,7 @@ class PsrLinterVisitor
         $rulesVisitor = new RulesVsistor($this->rules, $this->autoFix);
         $traverser->addVisitor($rulesVisitor);
         $traverser->traverse($stmts);
-        $messages = $rulesVisitor->getReport();
+        $messages = $rulesVisitor->getLog();
         foreach ($messages as $message) {
             $this->logger->addRecord(
                 new LogRecord(
