@@ -3,7 +3,7 @@
 namespace HexletPsrLinter\Linter\Loader;
 
 use function HexletPsrLinter\getTargetFiles;
-use HexletPsrLinter\Linter\Rules\RulesBaseInterfase;
+use HexletPsrLinter\Linter\Rules\RuleBaseInterfase;
 use HexletPsrLinter\Logger\Logger;
 use HexletPsrLinter\Logger\LogRecord;
 use PhpParser\NodeTraverser;
@@ -52,7 +52,7 @@ class RulesLoader
                 $fullClassName = $namespace . '\\' . $className;
                 if (class_exists($fullClassName)) {
                     $implements = class_implements($fullClassName);
-                    if (in_array(RulesBaseInterfase::class, $implements)) {
+                    if (in_array(RuleBaseInterfase::class, $implements)) {
                         $this->rules [] = $fullClassName;
                         $this->addRecord(
                             Logger::LOGLEVEL_OK,

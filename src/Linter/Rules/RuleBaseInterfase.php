@@ -6,7 +6,7 @@ namespace HexletPsrLinter\Linter\Rules;
  * Interface RulesBaseInterfase
  * @package HexletPsrLinter\Linter
  */
-interface RulesBaseInterfase
+interface RuleBaseInterfase
 {
     /**
      * @return mixed

@@ -40,6 +40,7 @@ class LinterApp
         $rules = $rulesLoader->loadRules($rulesPath);
         $this->cli->lightGreen("Loading rules:");
         $this->printLog($rulesLoader->getLog());
+        $this->cli->out('');
         if ($rules == []) {
             $this->printErrorMsg('No rules found');
             return 1;

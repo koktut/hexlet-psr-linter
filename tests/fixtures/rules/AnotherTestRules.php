@@ -2,13 +2,13 @@
 
 namespace TestRules;
 
-use HexletPsrLinter\Linter\Rules\RulesBaseInterfase;
+use HexletPsrLinter\Linter\Rules\RuleBaseInterfase;
 
 /**
  * Class AntotherTetsRules
  * @package HexletPsrLinter\Linter
  */
-class AnotherTestRules implements RulesBaseInterfase
+class AnotherTestRules implements RuleBaseInterfase
 {
     /**
      * @return string
