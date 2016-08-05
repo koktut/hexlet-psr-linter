@@ -2,6 +2,7 @@
 
 namespace HexletPsrLinter\Linter;
 
+use PhpParser\Error;
 use PhpParser\Node;
 use PhpParser\ParserFactory;
 use PhpParser\Node\Stmt;
@@ -44,7 +45,21 @@ class PsrLinter
 
         $this->logger = new Logger();
 
-        $stmts = $this->parser->parse($code);
+        try {
+            $stmts = $this->parser->parse($code);
+        } catch (Error $e) {
+            $this->logger->addRecord(
+                new LogRecord(
+                    '',
+                    '',
+                    Logger::LOGLEVEL_ERROR,
+                    $e->getMessage(),
+                    ''
+                )
+            );
+            return $this->logger;
+        }
+
         $traverser = new NodeTraverser;
         $rulesVisitor = new RulesVisitor($this->rules, $this->autoFix);
         $traverser->addVisitor($rulesVisitor);
