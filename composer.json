@@ -38,7 +38,7 @@
   },
   "extra": {
     "branch-alias": {
-      "1.0": "1.0"
+      "stable": "1.0"
     }
   },
   "bin": [
