@@ -1,0 +1,45 @@
+#!/usr/bin/env php
+<?php
+
+namespace HexletPsrLinter;
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use Commando\Command;
+
+$cmd = new Command();
+$cmd->beepOnError(false);
+
+$cmd->option()
+    ->require(true)
+    ->description('Sources path');
+$cmd->option()
+    ->require(true)
+    ->description('Rules path');
+
+$cmd->option('r')
+    ->aka('report')
+    ->description('Make report file')
+    ->boolean()
+    ->default(false);
+
+$cmd->option('f')
+    ->aka('format')
+    ->description('Report file format [default: txt]')
+    ->must(function ($format) {
+        $formats = array('txt', 'json', 'yml');
+        return in_array($format, $formats);
+    })
+    ->default('txt');
+
+$cmd->option('o')
+    ->aka('output')
+    ->description('Report file path [default: report]')
+    ->default('report');
+
+$cmd->option('fix')
+    ->description('Auto fix names (my_var_name -> MyVarName)')
+    ->boolean();
+
+$app = new LinterApp();
+exit($app->run($cmd));

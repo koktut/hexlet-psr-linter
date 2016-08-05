@@ -26,6 +26,8 @@ class ReportJsonTest extends \PHPUnit_Framework_TestCase
             new LogRecord(1, 0, Logger::LOGLEVEL_ERROR, 'message', 'text')
         );
         $report = new ReportJson();
-        $this->assertNotEquals('[]', $report->build($logger));
+        $report->addSection('file.php', $logger);
+        $s = $report->build();
+        $this->assertNotEquals('[]', $report->build());
     }
 }

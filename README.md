@@ -1,5 +1,9 @@
 ### PHP PSR linter library
 
+## About
+
+psrlint script that tokenizes PHP files to detect violations of a defined coding standard and automatically correct coding standard violations.
+
 [![Build Status](https://travis-ci.org/koktut/hexlet-psr-linter.svg?branch=master)](https://travis-ci.org/koktut/hexlet-psr-linter)
 [![Code Climate](https://codeclimate.com/github/koktut/hexlet-psr-linter/badges/gpa.svg)](https://codeclimate.com/github/koktut/hexlet-psr-linter)
 [![Issue Count](https://codeclimate.com/github/koktut/hexlet-psr-linter/badges/issue_count.svg)](https://codeclimate.com/github/koktut/hexlet-psr-linter)
@@ -12,19 +16,35 @@
 
 ## Installation
 
+Install hexlet-psr-linter system-wide with the following command:
+
+```
+composer global require "koktut/hexlet-psr-linter=dev-master"
+```
+
+Make sure you have ~/.composer/vendor/bin/ in your PATH.
+
+Or alternatively, include a dependency for koktut/hexlet-psr-linter in your composer.json file. For example:
+
+```
+{
+    "require-dev": {
+        "koktut/hexlet-psr-linter": "dev-master"
+    }
+}
+```
+
+You will then be able to run hexlet-psr-linter from the vendor bin directory:
+
+```
+./vendor/bin/psrlint -h
+```
+
+You can also download the hexlet-psr-linter source and run the psrlint command directly from the Git clone:
+
 ```
 git clone https://github.com/koktut/hexlet-psr-linter.git
-cd hexlet-psr-linter
 make install
+php scripts/psrlint -h
 ```
 
-## Test
-```
-make test
-```
-
-## Usage
-
-```
-./scripts/psrlint path_to_php_file
-```

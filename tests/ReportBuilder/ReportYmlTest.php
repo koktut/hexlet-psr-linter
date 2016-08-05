@@ -26,6 +26,7 @@ class ReportYmlTest extends \PHPUnit_Framework_TestCase
             new LogRecord(1, 0, Logger::LOGLEVEL_ERROR, 'message', 'text')
         );
         $report = new ReportYml();
-        $this->assertNotEquals('{  }', $report->build($logger));
+        $report->addSection('file.php', $logger);
+        $this->assertNotEquals('{  }', $report->build());
     }
 }

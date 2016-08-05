@@ -8,13 +8,11 @@ namespace HexletPsrLinter\Logger;
  */
 class Logger
 {
-    const LOGLEVEL_ERROR = 2;
     const LOGLEVEL_WARNING = 1;
+    const LOGLEVEL_ERROR = 2;
+    const LOGLEVEL_FIXED = 3;
+    const LOGLEVEL_OK = 4;
 
-    private $levelText = [
-        self::LOGLEVEL_ERROR => 'error',
-        self::LOGLEVEL_WARNING => 'warning'
-    ];
     private $log;
 
     /**
@@ -23,6 +21,24 @@ class Logger
     public function __construct()
     {
         $this->log = [];
+    }
+
+    /**
+     * @param $level
+     * @return mixed
+     */
+    public static function getLevelAsText($level)
+    {
+        $levelText = [
+            self::LOGLEVEL_ERROR => 'error',
+            self::LOGLEVEL_WARNING => 'warning',
+            self::LOGLEVEL_FIXED => 'fixed',
+            self::LOGLEVEL_OK => 'ok'
+        ];
+        if (!key_exists($level, $levelText)) {
+            return '';
+        }
+        return $levelText[$level];
     }
 
     /**
@@ -38,7 +54,7 @@ class Logger
      */
     public function addRecord($logRecord)
     {
-        $this->log []= $logRecord;
+        $this->log [] = $logRecord;
     }
 
     /**
@@ -68,24 +84,36 @@ class Logger
      */
     public function getStatistics()
     {
-        $problems = $this->getSize();
         $err = count(
             array_filter($this->log, function ($item) {
                 return ($item->getLevel() == Logger::LOGLEVEL_ERROR);
             })
         );
-        return [$problems, $err];
+        $warn = count(
+            array_filter($this->log, function ($item) {
+                return ($item->getLevel() == Logger::LOGLEVEL_WARNING);
+            })
+        );
+
+        return ['err' =>$err, 'warn' => $warn];
     }
 
     /**
-     * @param $level
-     * @return mixed
+     * @return array
      */
-    public function getLevelAsText($level)
+    public function toArray()
     {
-        if (!key_exists($level, $this->levelText)) {
-            return '';
+        $resArray = [];
+        for ($index = 0; $index < $this->getSize(); $index++) {
+            $record = $this->getRecord($index);
+            $resArray[$index] = [
+                'line' => $record->getLine(),
+                'column' =>  $record->getColumn(),
+                'level' => $record->getLevel(),
+                'message' => $record->getMessage(),
+                'name' => $record->getName(),
+            ];
         }
-        return $this->levelText[$level];
+        return $resArray;
     }
 }

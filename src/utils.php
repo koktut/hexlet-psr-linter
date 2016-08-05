@@ -2,8 +2,6 @@
 
 namespace HexletPsrLinter;
 
-use PhpParser\Node\Stmt\Function_;
-
 /**
  * @param $srcPath
  * @return array
@@ -23,7 +21,9 @@ function getTargetFiles($srcPath)
             }
         }
     } else {
-        $targetFiles[] = $srcPath;
+        if (is_file($srcPath)) {
+            $targetFiles[] = $srcPath;
+        }
     }
 
     return $targetFiles;

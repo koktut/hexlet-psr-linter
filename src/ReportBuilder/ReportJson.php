@@ -8,23 +8,34 @@ namespace HexletPsrLinter\ReportBuilder;
  */
 class ReportJson implements ReportBaseInterface
 {
+    private $report;
 
     /**
+     * ReportJson constructor.
+     */
+    public function __construct()
+    {
+        $this->report = [];
+    }
+
+    /**
+     * @param $sectioName
      * @param $logger
+     * @return mixed
+     */
+    public function addSection($sectioName, $logger)
+    {
+        $this->report [] = [
+            'file' => $sectioName,
+            'problems' => $logger->toArray()
+        ];
+    }
+
+    /**
      * @return string
      */
-    public function build($logger)
+    public function build()
     {
-        $jsonArray = [];
-        for ($index = 0; $index < $logger->getSize(); $index++) {
-            $record = $logger->getRecord($index);
-            $jsonArray [] = [
-                $record->getLine() . ':' . $record->getLine(),
-                $logger->getLevelAsText($record->getLevel()),
-                $record->getMessage(),
-                $record->getName()
-            ];
-        }
-        return json_encode($jsonArray);
+        return json_encode($this->report);
     }
 }
