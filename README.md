@@ -40,7 +40,7 @@ You will then be able to run hexlet-psr-linter from the vendor bin directory:
 ./vendor/bin/psrlint -h
 ```
 
-You can also download the hexlet-psr-linter source and run the phpcs and phpcbf commands directly from the Git clone:
+You can also download the hexlet-psr-linter source and run the psrlint command directly from the Git clone:
 
 ```
 git clone https://github.com/koktut/hexlet-psr-linter.git
