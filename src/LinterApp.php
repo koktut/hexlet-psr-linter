@@ -115,10 +115,8 @@ class LinterApp
     private function printLogStat($logger)
     {
         $stat = $logger->getStatistics();
-        $err = $stat['err'];
-        $warn = $stat['warn'];
-        $problems = $err + $warn;
-        $this->cli->lightRed("$problems problems ($err errors, $warn warnings)");
+        $problems = $stat['err'] + $stat['warn'];
+        $this->cli->lightRed("$problems problems ($stat[err] errors, $stat[warn] warnings)");
     }
 
     /**
