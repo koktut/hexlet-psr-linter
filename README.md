@@ -48,3 +48,6 @@ make install
 php scripts/psrlint -h
 ```
 
+## Demo
+
+[![asciicast](https://asciinema.org/a/et0o7khsqd319zi6qt4hylt2g.png)](https://asciinema.org/a/et0o7khsqd319zi6qt4hylt2g)
