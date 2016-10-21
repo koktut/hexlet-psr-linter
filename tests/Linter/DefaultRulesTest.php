@@ -37,7 +37,7 @@ class DefaultRulesTest extends \PHPUnit_Framework_TestCase
         $this->assertNotTrue($this->rules->validate(new Stmt\Function_('function-name')));
     }
 
-    public function testValidateMathodNamesWithValidNames()
+    public function testValidateMethodNamesWithValidNames()
     {
         $this->assertTrue($this->rules->validate(new Stmt\ClassMethod('methodName')));
         $this->assertTrue($this->rules->validate(new Stmt\ClassMethod('methodname')));
